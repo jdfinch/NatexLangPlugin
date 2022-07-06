@@ -8,36 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface NatexRigidSequence extends PsiElement {
 
   @NotNull
-  List<NatexAssignment> getAssignmentList();
-
-  @NotNull
-  List<NatexConjunction> getConjunctionList();
-
-  @NotNull
-  List<NatexDisjunction> getDisjunctionList();
-
-  @NotNull
-  List<NatexFlexibleSequence> getFlexibleSequenceList();
-
-  @NotNull
-  List<NatexKleenePlus> getKleenePlusList();
-
-  @NotNull
-  List<NatexKleeneStar> getKleeneStarList();
-
-  @NotNull
-  List<NatexMacro> getMacroList();
-
-  @NotNull
-  List<NatexNegation> getNegationList();
-
-  @NotNull
-  List<NatexOptional> getOptionalList();
-
-  @NotNull
-  List<NatexReference> getReferenceList();
-
-  @NotNull
-  List<NatexRigidSequence> getRigidSequenceList();
+  NatexMultiTerm getMultiTerm();
 
 }

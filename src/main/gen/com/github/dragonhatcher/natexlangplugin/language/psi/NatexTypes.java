@@ -36,7 +36,6 @@ public interface NatexTypes {
   IElementType L_PAREN = new NatexTokenType("L_PAREN");
   IElementType MACRO_ARG_STRING = new NatexTokenType("MACRO_ARG_STRING");
   IElementType MACRO_LITERAL = new NatexTokenType("MACRO_LITERAL");
-  IElementType OBJ = new NatexTokenType("obj");
   IElementType PUNCUATION = new NatexTokenType("PUNCUATION");
   IElementType QUOTE = new NatexTokenType("QUOTE");
   IElementType REGEX = new NatexTokenType("REGEX");

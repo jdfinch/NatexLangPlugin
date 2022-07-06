@@ -28,24 +28,26 @@ public class PythonInjector implements MultiHostInjector {
         if (element instanceof PyDictLiteralExpression) {
             boolean first = true;
 
-            for (PsiElement kv : element.getChildren()) {
+            PsiElement[] children = element.getChildren();
+            for (PsiElement kv : children) {
                 if (!(kv instanceof PyKeyValueExpression)) continue;
 
                 PsiElement key = ((PyKeyValueExpression) kv).getKey();
                 PsiElement value = ((PyKeyValueExpression) kv).getValue();
 
-                boolean isLast = kv == element.getLastChild();
+                boolean isLast = kv == children[children.length - 1];
+                boolean isObject = value instanceof PyDictLiteralExpression;
                 boolean isValid = value instanceof PyDictLiteralExpression || value instanceof PyStringLiteralExpression;
 
                 registrar.addPlace(first ? "{\"" : "\"", isValid ? "\":" : "\":,", (PsiLanguageInjectionHost) key, getRange(key));
 
                 assert value != null;
-                recurseOnChildren(registrar, value, isLast ? closing + 1 : 1);
+                recurseOnChildren(registrar, value, (isLast ? closing : 0) + (isObject ? 1 : 0));
 
                 first = false;
             }
         } else if (element instanceof PyStringLiteralExpression) {
-            registrar.addPlace("\"", "\"},".repeat(closing), (PsiLanguageInjectionHost) element, getRange(element));
+            registrar.addPlace("\"", "\"" + (closing == 0 ? "," : "},".repeat(closing)), (PsiLanguageInjectionHost) element, getRange(element));
         }
     }
 

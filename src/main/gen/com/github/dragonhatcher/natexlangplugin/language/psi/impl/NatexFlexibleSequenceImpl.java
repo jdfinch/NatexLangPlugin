@@ -29,68 +29,8 @@ public class NatexFlexibleSequenceImpl extends ASTWrapperPsiElement implements N
 
   @Override
   @NotNull
-  public List<NatexAssignment> getAssignmentList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexAssignment.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexConjunction> getConjunctionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexConjunction.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexDisjunction> getDisjunctionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexDisjunction.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexFlexibleSequence> getFlexibleSequenceList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexFlexibleSequence.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexKleenePlus> getKleenePlusList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexKleenePlus.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexKleeneStar> getKleeneStarList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexKleeneStar.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexMacro> getMacroList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexMacro.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexNegation> getNegationList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexNegation.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexOptional> getOptionalList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexOptional.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexReference> getReferenceList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexReference.class);
-  }
-
-  @Override
-  @NotNull
-  public List<NatexRigidSequence> getRigidSequenceList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexRigidSequence.class);
+  public NatexMultiTerm getMultiTerm() {
+    return findNotNullChildByClass(NatexMultiTerm.class);
   }
 
 }

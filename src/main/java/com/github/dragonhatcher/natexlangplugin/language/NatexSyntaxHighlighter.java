@@ -37,6 +37,8 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("NATEX_SYMBOL", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey STATE_NAME =
             createTextAttributesKey("NATEX_STATE_NAME", PURPLE);
+    public static final TextAttributesKey BOT_STATEMENT =
+            createTextAttributesKey("NATEX_BOT_STATEMENT", YELLOW);
     public static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("NATEX_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 

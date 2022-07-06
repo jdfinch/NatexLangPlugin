@@ -50,167 +50,45 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // L_ARROW term (","? " "? term)* R_ARROW
+  // L_ARROW multi_term R_ARROW
   public static boolean conjunction(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "conjunction")) return false;
     if (!nextTokenIs(b, L_ARROW)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, L_ARROW);
-    r = r && term(b, l + 1);
-    r = r && conjunction_2(b, l + 1);
+    r = r && multi_term(b, l + 1);
     r = r && consumeToken(b, R_ARROW);
     exit_section_(b, m, CONJUNCTION, r);
     return r;
   }
 
-  // (","? " "? term)*
-  private static boolean conjunction_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "conjunction_2")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!conjunction_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "conjunction_2", c)) break;
-    }
-    return true;
-  }
-
-  // ","? " "? term
-  private static boolean conjunction_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "conjunction_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = conjunction_2_0_0(b, l + 1);
-    r = r && conjunction_2_0_1(b, l + 1);
-    r = r && term(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ","?
-  private static boolean conjunction_2_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "conjunction_2_0_0")) return false;
-    consumeToken(b, ",");
-    return true;
-  }
-
-  // " "?
-  private static boolean conjunction_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "conjunction_2_0_1")) return false;
-    consumeToken(b, " ");
-    return true;
-  }
-
   /* ********************************************************** */
-  // L_CURLY term (","? " "? term)* R_CURLY
+  // L_CURLY multi_term R_CURLY
   public static boolean disjunction(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "disjunction")) return false;
     if (!nextTokenIs(b, L_CURLY)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, L_CURLY);
-    r = r && term(b, l + 1);
-    r = r && disjunction_2(b, l + 1);
+    r = r && multi_term(b, l + 1);
     r = r && consumeToken(b, R_CURLY);
     exit_section_(b, m, DISJUNCTION, r);
     return r;
   }
 
-  // (","? " "? term)*
-  private static boolean disjunction_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "disjunction_2")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!disjunction_2_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "disjunction_2", c)) break;
-    }
-    return true;
-  }
-
-  // ","? " "? term
-  private static boolean disjunction_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "disjunction_2_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = disjunction_2_0_0(b, l + 1);
-    r = r && disjunction_2_0_1(b, l + 1);
-    r = r && term(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ","?
-  private static boolean disjunction_2_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "disjunction_2_0_0")) return false;
-    consumeToken(b, ",");
-    return true;
-  }
-
-  // " "?
-  private static boolean disjunction_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "disjunction_2_0_1")) return false;
-    consumeToken(b, " ");
-    return true;
-  }
-
   /* ********************************************************** */
-  // L_BRACKET " "? term (","? " "? term)* R_BRACKET
+  // L_BRACKET multi_term R_BRACKET
   public static boolean flexible_sequence(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "flexible_sequence")) return false;
     if (!nextTokenIs(b, L_BRACKET)) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, L_BRACKET);
-    r = r && flexible_sequence_1(b, l + 1);
-    r = r && term(b, l + 1);
-    r = r && flexible_sequence_3(b, l + 1);
+    r = r && multi_term(b, l + 1);
     r = r && consumeToken(b, R_BRACKET);
     exit_section_(b, m, FLEXIBLE_SEQUENCE, r);
     return r;
-  }
-
-  // " "?
-  private static boolean flexible_sequence_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flexible_sequence_1")) return false;
-    consumeToken(b, " ");
-    return true;
-  }
-
-  // (","? " "? term)*
-  private static boolean flexible_sequence_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flexible_sequence_3")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!flexible_sequence_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "flexible_sequence_3", c)) break;
-    }
-    return true;
-  }
-
-  // ","? " "? term
-  private static boolean flexible_sequence_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flexible_sequence_3_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = flexible_sequence_3_0_0(b, l + 1);
-    r = r && flexible_sequence_3_0_1(b, l + 1);
-    r = r && term(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ","?
-  private static boolean flexible_sequence_3_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flexible_sequence_3_0_0")) return false;
-    consumeToken(b, ",");
-    return true;
-  }
-
-  // " "?
-  private static boolean flexible_sequence_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "flexible_sequence_3_0_1")) return false;
-    consumeToken(b, " ");
-    return true;
   }
 
   /* ********************************************************** */
@@ -392,7 +270,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE
+  // flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
   static boolean non_kleene_term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "non_kleene_term")) return false;
     boolean r;
@@ -408,6 +286,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, LITERAL);
     if (!r) r = consumeToken(b, SYMBOL);
     if (!r) r = consumeToken(b, STATE);
+    if (!r) r = consumeToken(b, KEYWORD);
     return r;
   }
 
@@ -436,7 +315,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // L_BRACKET "!" " "? term (","? " "? term)* R_BRACKET
+  // L_BRACKET "!" multi_term R_BRACKET
   public static boolean rigid_sequence(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rigid_sequence")) return false;
     if (!nextTokenIs(b, L_BRACKET)) return false;
@@ -444,56 +323,10 @@ public class NatexParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, L_BRACKET);
     r = r && consumeToken(b, "!");
-    r = r && rigid_sequence_2(b, l + 1);
-    r = r && term(b, l + 1);
-    r = r && rigid_sequence_4(b, l + 1);
+    r = r && multi_term(b, l + 1);
     r = r && consumeToken(b, R_BRACKET);
     exit_section_(b, m, RIGID_SEQUENCE, r);
     return r;
-  }
-
-  // " "?
-  private static boolean rigid_sequence_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "rigid_sequence_2")) return false;
-    consumeToken(b, " ");
-    return true;
-  }
-
-  // (","? " "? term)*
-  private static boolean rigid_sequence_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "rigid_sequence_4")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!rigid_sequence_4_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "rigid_sequence_4", c)) break;
-    }
-    return true;
-  }
-
-  // ","? " "? term
-  private static boolean rigid_sequence_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "rigid_sequence_4_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = rigid_sequence_4_0_0(b, l + 1);
-    r = r && rigid_sequence_4_0_1(b, l + 1);
-    r = r && term(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // ","?
-  private static boolean rigid_sequence_4_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "rigid_sequence_4_0_0")) return false;
-    consumeToken(b, ",");
-    return true;
-  }
-
-  // " "?
-  private static boolean rigid_sequence_4_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "rigid_sequence_4_0_1")) return false;
-    consumeToken(b, " ");
-    return true;
   }
 
   /* ********************************************************** */
@@ -655,7 +488,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // optional | kleene_star | kleene_plus | non_kleene_term | obj
+  // optional | kleene_star | kleene_plus | non_kleene_term
   static boolean term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "term")) return false;
     boolean r;
@@ -663,7 +496,6 @@ public class NatexParser implements PsiParser, LightPsiParser {
     if (!r) r = kleene_star(b, l + 1);
     if (!r) r = kleene_plus(b, l + 1);
     if (!r) r = non_kleene_term(b, l + 1);
-    if (!r) r = consumeToken(b, OBJ);
     return r;
   }
 
@@ -814,15 +646,14 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PUNCUATION | KEYWORD
+  // PUNCUATION
   public static boolean x(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "x")) return false;
-    if (!nextTokenIs(b, "<x>", KEYWORD, PUNCUATION)) return false;
+    if (!nextTokenIs(b, PUNCUATION)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, X, "<x>");
+    Marker m = enter_section_(b);
     r = consumeToken(b, PUNCUATION);
-    if (!r) r = consumeToken(b, KEYWORD);
-    exit_section_(b, l, m, r, false, null);
+    exit_section_(b, m, X, r);
     return r;
   }
 

@@ -12,10 +12,10 @@ public class NatexBraceMatcher implements PairedBraceMatcher {
     @Override
     public BracePair @NotNull [] getPairs() {
         return new BracePair[]{
-                new BracePair(NatexTypes.L_PAREN, NatexTypes.R_PAREN, true),
-                new BracePair(NatexTypes.L_CURLY, NatexTypes.R_CURLY, true),
-                new BracePair(NatexTypes.L_BRACKET, NatexTypes.R_BRACKET, true),
-                new BracePair(NatexTypes.L_ARROW, NatexTypes.R_ARROW, true),
+                new BracePair(NatexTypes.L_PAREN, NatexTypes.R_PAREN, false),
+                new BracePair(NatexTypes.L_CURLY, NatexTypes.R_CURLY, false),
+                new BracePair(NatexTypes.L_BRACKET, NatexTypes.R_BRACKET, false),
+                new BracePair(NatexTypes.L_ARROW, NatexTypes.R_ARROW, false),
         };
     }
 

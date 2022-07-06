@@ -35,7 +35,7 @@ state_name ::= SYMBOL {methods=[getState]}
 
 multi_term ::= term (","? term)*
 private term ::= optional | kleene_star | kleene_plus | non_kleene_term
-private non_kleene_term ::= flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE
+private non_kleene_term ::= flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
 
 flexible_sequence ::= L_BRACKET multi_term R_BRACKET
 rigid_sequence ::= L_BRACKET "!" multi_term R_BRACKET
@@ -49,4 +49,4 @@ reference ::= "$" SYMBOL
 assignment ::= "$" SYMBOL "=" term
 macro ::= "#" SYMBOL ( L_PAREN macro_arg? (","? " "? macro_arg)* R_PAREN )?
 macro_arg ::= MACRO_ARG_STRING | MACRO_LITERAL | macro
-x ::= PUNCUATION | KEYWORD
+x ::= PUNCUATION
