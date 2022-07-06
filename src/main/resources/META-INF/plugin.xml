@@ -24,6 +24,10 @@
         <lang.syntaxHighlighterFactory
                 language="Natex"
                 implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexSyntaxHighlighterFactory"/>
+
+        <lang.braceMatcher
+                language="Natex"
+                implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexBraceMatcher"/>
     </extensions>
 
     <applicationListeners>

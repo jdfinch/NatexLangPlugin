@@ -34,6 +34,14 @@ PUNCUATION = "[" | "]" | "{" | "}" | "(" | ")" | "<" | ">" | "," | "$" | "=" | "
 {MACRO_LITERAL}                                             { return NatexTypes.MACRO_LITERAL; }
 {MACRO_ARG_STRING}                                          { return NatexTypes.MACRO_ARG_STRING; }
 {REGEX}                                                     { return NatexTypes.REGEX; }
+"("                                                         { return NatexTypes.L_PAREN; }
+")"                                                         { return NatexTypes.R_PAREN; }
+"{"                                                         { return NatexTypes.L_CURLY; }
+"}"                                                         { return NatexTypes.R_CURLY; }
+"["                                                         { return NatexTypes.L_BRACKET; }
+"]"                                                         { return NatexTypes.R_BRACKET; }
+"<"                                                         { return NatexTypes.L_ARROW; }
+">"                                                         { return NatexTypes.R_ARROW; }
 {PUNCUATION}                                                { return NatexTypes.PUNCUATION; }
 
 //<YYINITIAL> {END_OF_LINE_COMMENT}                           { yybegin(YYINITIAL); return NatexTypes.COMMENT; }

@@ -23,10 +23,18 @@ public interface NatexTypes {
   IElementType X = new NatexElementType("X");
 
   IElementType LITERAL = new NatexTokenType("LITERAL");
+  IElementType L_ARROW = new NatexTokenType("L_ARROW");
+  IElementType L_BRACKET = new NatexTokenType("L_BRACKET");
+  IElementType L_CURLY = new NatexTokenType("L_CURLY");
+  IElementType L_PAREN = new NatexTokenType("L_PAREN");
   IElementType MACRO_ARG_STRING = new NatexTokenType("MACRO_ARG_STRING");
   IElementType MACRO_LITERAL = new NatexTokenType("MACRO_LITERAL");
   IElementType PUNCUATION = new NatexTokenType("PUNCUATION");
   IElementType REGEX = new NatexTokenType("REGEX");
+  IElementType R_ARROW = new NatexTokenType("R_ARROW");
+  IElementType R_BRACKET = new NatexTokenType("R_BRACKET");
+  IElementType R_CURLY = new NatexTokenType("R_CURLY");
+  IElementType R_PAREN = new NatexTokenType("R_PAREN");
   IElementType SYMBOL = new NatexTokenType("SYMBOL");
 
   class Factory {

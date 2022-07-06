@@ -18,16 +18,16 @@ natexFile ::= term (","? " "? term)*
 private term ::= optional | kleene_star | kleene_plus | non_kleene_term
 private non_kleene_term ::= flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL
 
-flexible_sequence ::= "[" " "? term (","? " "? term)* "]"
-rigid_sequence ::= "[!" " "? term (","? " "? term)* "]"
-conjunction ::= "<" term (","? " "? term)* ">"
-disjunction ::= "{" term (","? " "? term)* "}"
+flexible_sequence ::= L_BRACKET " "? term (","? " "? term)* R_BRACKET
+rigid_sequence ::= L_BRACKET "!" " "? term (","? " "? term)* R_BRACKET
+conjunction ::= L_ARROW term (","? " "? term)* R_ARROW
+disjunction ::= L_CURLY term (","? " "? term)* R_CURLY
 optional ::= non_kleene_term "?"
 kleene_star ::= non_kleene_term "*"
 kleene_plus ::= non_kleene_term "+"
 negation ::= "-" term
 reference ::= "$" SYMBOL
 assignment ::= "$" SYMBOL "=" term
-macro ::= "#" SYMBOL ( "(" macro_arg? (","? " "? macro_arg)* ")" )?
+macro ::= "#" SYMBOL ( L_PAREN macro_arg? (","? " "? macro_arg)* R_PAREN )?
 macro_arg ::= MACRO_ARG_STRING | MACRO_LITERAL | macro
 x ::= PUNCUATION
