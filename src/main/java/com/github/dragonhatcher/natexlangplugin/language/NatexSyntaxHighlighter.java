@@ -43,7 +43,15 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
 
     @Override
     public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
-        if (tokenType.equals(NatexTypes.PUNCUATION)) {
+        if (tokenType.equals(NatexTypes.PUNCUATION)
+                || tokenType.equals(NatexTypes.L_PAREN)
+                || tokenType.equals(NatexTypes.R_PAREN)
+                || tokenType.equals(NatexTypes.L_CURLY)
+                || tokenType.equals(NatexTypes.R_CURLY)
+                || tokenType.equals(NatexTypes.L_BRACKET)
+                || tokenType.equals(NatexTypes.R_BRACKET)
+                || tokenType.equals(NatexTypes.L_ARROW)
+                || tokenType.equals(NatexTypes.R_ARROW)) {
             return PUNCTUATION_KEYS;
         }
         if (tokenType.equals(NatexTypes.LITERAL) || tokenType.equals(NatexTypes.MACRO_LITERAL) || tokenType.equals(NatexTypes.MACRO_ARG_STRING)) {
