@@ -7,8 +7,19 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.dragonhatcher.natexlangplugin.services.MyApplicationService"/>
+        <applicationService
+                serviceImplementation="com.github.dragonhatcher.natexlangplugin.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.dragonhatcher.natexlangplugin.services.MyProjectService"/>
+
+        <fileType name="Natex File"
+                  implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexFileType"
+                  fieldName="INSTANCE"
+                  language="Natex"
+                  extensions="natex"/>
+
+        <lang.parserDefinition
+                language="Natex"
+                implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexParserDefinition"/>
     </extensions>
 
     <applicationListeners>

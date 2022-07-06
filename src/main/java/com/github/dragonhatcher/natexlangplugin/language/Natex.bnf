@@ -1,0 +1,20 @@
+{
+  parserClass="com.github.dragonhatcher.natexlangplugin.language.parser.NatexParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Natex"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.dragonhatcher.natexlangplugin.language.psi"
+  psiImplPackage="com.github.dragonhatcher.natexlangplugin.language.psi.impl"
+
+  elementTypeHolderClass="com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes"
+  elementTypeClass="com.github.dragonhatcher.natexlangplugin.language.psi.NatexElementType"
+  tokenTypeClass="com.github.dragonhatcher.natexlangplugin.language.psi.NatexTokenType"
+}
+
+natexFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY
