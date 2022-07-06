@@ -20,6 +20,10 @@
         <lang.parserDefinition
                 language="Natex"
                 implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="Natex"
+                implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexSyntaxHighlighterFactory"/>
     </extensions>
 
     <applicationListeners>
