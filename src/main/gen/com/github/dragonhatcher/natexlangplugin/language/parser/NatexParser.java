@@ -436,7 +436,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // QUOTE "speaker" QUOTE ":" QUOTE "system" QUOTE
+  // QUOTE "speaker" QUOTE ":" QUOTE ("system" | "user") QUOTE
   static boolean speaker(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "speaker")) return false;
     if (!nextTokenIs(b, QUOTE)) return false;
@@ -448,10 +448,19 @@ public class NatexParser implements PsiParser, LightPsiParser {
     r = r && report_error_(b, consumeToken(b, QUOTE));
     r = p && report_error_(b, consumeToken(b, ":")) && r;
     r = p && report_error_(b, consumeToken(b, QUOTE)) && r;
-    r = p && report_error_(b, consumeToken(b, "system")) && r;
+    r = p && report_error_(b, speaker_5(b, l + 1)) && r;
     r = p && consumeToken(b, QUOTE) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  // "system" | "user"
+  private static boolean speaker_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "speaker_5")) return false;
+    boolean r;
+    r = consumeToken(b, "system");
+    if (!r) r = consumeToken(b, "user");
+    return r;
   }
 
   /* ********************************************************** */

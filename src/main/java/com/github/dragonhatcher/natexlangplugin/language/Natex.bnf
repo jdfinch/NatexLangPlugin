@@ -23,7 +23,7 @@ kv ::=  state | score | speaker | term_kv
 
 private state ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE {pin=2}
 private score ::= QUOTE "score" QUOTE ":" {pin=2}
-private speaker ::= QUOTE "speaker" QUOTE ":" QUOTE "system" QUOTE {pin=2}
+private speaker ::= QUOTE "speaker" QUOTE ":" QUOTE ("system" | "user") QUOTE {pin=2}
 private term_kv ::= QUOTE multi_term QUOTE ":" (obj | QUOTE state_name QUOTE) {pin=2}
 
 state_name ::= SYMBOL {methods=[getState]}
