@@ -19,8 +19,8 @@ CRLF=\R
 WHITE_SPACE=[\ \n\t\f]
 FIRST_VALUE_CHARACTER=[^ \n\f\\] | "\\"{CRLF} | "\\".
 MACRO_LITERAL=[a-z_A-Z.0-9]+
-MACRO_ARG_STRING=`[^`]+`
-LITERAL=([a-z_A-Z@.0-9:]+( [a-z_A-Z@.0-9:]+)*) | \"[^\"]+\" | `[^`]+`
+MACRO_ARG_STRING=`[^`]*(`)?
+LITERAL=([a-z_A-Z@.0-9:]+( [a-z_A-Z@.0-9:]+)*) | \"[^\"]*(\")? | `[^`]*(`)?
 SYMBOL=[a-z_A-Z.0-9]+
 REGEX=\/[^\/]+\/
 PUNCUATION = "[" | "]" | "{" | "}" | "(" | ")" | "<" | ">" | "," | "$" | "=" | "#" | "*" | "+" | "!"

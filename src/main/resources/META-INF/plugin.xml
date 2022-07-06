@@ -28,6 +28,10 @@
         <lang.braceMatcher
                 language="Natex"
                 implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexBraceMatcher"/>
+
+        <lang.quoteHandler
+                language="Natex"
+                implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexQuoteHandler"/>
     </extensions>
 
     <applicationListeners>
