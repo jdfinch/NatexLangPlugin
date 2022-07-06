@@ -5,6 +5,7 @@
     <vendor>dragon-hatcher</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.python</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationService
@@ -40,6 +41,8 @@
         <annotator
                 language="Natex"
                 implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexAnnotator"/>
+
+        <languageInjector implementation="com.github.dragonhatcher.natexlangplugin.language.PythonInjector"/>
     </extensions>
 
     <applicationListeners>
