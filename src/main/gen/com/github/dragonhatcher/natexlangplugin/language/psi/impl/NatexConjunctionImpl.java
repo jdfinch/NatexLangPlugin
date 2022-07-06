@@ -28,9 +28,9 @@ public class NatexConjunctionImpl extends ASTWrapperPsiElement implements NatexC
   }
 
   @Override
-  @NotNull
+  @Nullable
   public NatexMultiTerm getMultiTerm() {
-    return findNotNullChildByClass(NatexMultiTerm.class);
+    return findChildByClass(NatexMultiTerm.class);
   }
 
 }

@@ -13,22 +13,79 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class PythonInjector implements MultiHostInjector {
-    @Override
-    public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement element) {
-        if (element instanceof PyDictLiteralExpression) {
-            registrar.startInjecting(NatexLanguage.INSTANCE);
 
-            recurseOnChildren(registrar, element, 1);
+    String currentBefore = "";
+    String currentAfter = "";
+    PsiElement nextElement = null;
+    MultiHostRegistrar registrar;
 
-            registrar.doneInjecting();
+    String fullOut = "";
+
+    synchronized private void start(MultiHostRegistrar registrar) {
+        fullOut = "";
+        currentBefore = "";
+        currentAfter = "";
+        nextElement = null;
+        this.registrar = registrar;
+        registrar.startInjecting(NatexLanguage.INSTANCE);
+    }
+
+    synchronized private void write(String str) {
+        if (nextElement == null) {
+            currentBefore += str;
+        } else {
+            currentAfter += str;
         }
     }
 
-    private void recurseOnChildren(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement element, int closing) {
-        if (element instanceof PyDictLiteralExpression) {
-            boolean first = true;
+    synchronized private void write(PsiElement element) {
+        if (nextElement != null) {
+            fullOut += currentBefore + nextElement.getText();
+            registrar.addPlace(currentBefore, null, (PsiLanguageInjectionHost) nextElement, getRange(nextElement));
+            currentBefore = currentAfter;
+            currentAfter = "";
+        }
+        nextElement = element;
+    }
 
+    synchronized private void write(String before, PsiElement element, String after) {
+        write(before);
+        write(element);
+        write(after);
+    }
+
+    synchronized private void finish() {
+        if (nextElement != null) {
+            fullOut += currentBefore + nextElement.getText() + currentAfter;
+            registrar.addPlace(currentBefore, currentAfter, (PsiLanguageInjectionHost) nextElement, getRange(nextElement));
+        }
+    }
+
+    @Override
+    synchronized public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement element) {
+        if (element instanceof PyDictLiteralExpression) {
+            start(registrar);
+
+            recurseOnChildren(element);
+
+            finish();
+
+            try {
+                registrar.doneInjecting();
+            } catch (Exception e) {
+                // Nothing to highlight.
+            }
+        }
+    }
+
+    synchronized private void recurseOnChildren(PsiElement element) {
+        if (element == null) return;
+
+        if (element instanceof PyDictLiteralExpression) {
             PsiElement[] children = element.getChildren();
+
+            write("{");
+
             for (PsiElement kv : children) {
                 if (!(kv instanceof PyKeyValueExpression)) continue;
 
@@ -36,31 +93,27 @@ public class PythonInjector implements MultiHostInjector {
                 PsiElement value = ((PyKeyValueExpression) kv).getValue();
 
                 if (key instanceof PyStringLiteralExpression) {
-                    boolean isLast = kv == children[children.length - 1];
-                    boolean isObject = value instanceof PyDictLiteralExpression;
-                    boolean isValid = value instanceof PyDictLiteralExpression || value instanceof PyStringLiteralExpression;
-
-                    registrar.addPlace(first ? "{\"" : "\"", isValid ? "\":" : "\":,", (PsiLanguageInjectionHost) key, getRange(key));
-
-                    assert value != null;
-                    recurseOnChildren(registrar, value, (isLast ? closing : 0) + (isObject ? 1 : 0));
-
-                    first = false;
+                    write("\"", key, "\":");
+                    recurseOnChildren(value);
                 } else if (value instanceof PyDictLiteralExpression) {
-                    recurseOnChildren(registrar, value, 1);
+                    recurseOnChildren(value);
                 }
+
+                write(",");
             }
+
+            write("}");
         } else if (element instanceof PyStringLiteralExpression) {
-            registrar.addPlace("\"", "\"" + (closing == 0 ? "," : "},".repeat(closing)), (PsiLanguageInjectionHost) element, getRange(element));
+            write("\"", element, "\"");
         }
     }
 
     @Override
-    public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
+    synchronized public @NotNull List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
         return List.of(PyDictLiteralExpression.class);
     }
 
-    private TextRange getRange(PsiElement element) {
+    synchronized private TextRange getRange(PsiElement element) {
         return new TextRange(0, element.getTextLength());
     }
 }

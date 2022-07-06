@@ -17,15 +17,12 @@ public interface NatexOptional extends PsiElement {
   NatexDisjunction getDisjunction();
 
   @Nullable
-  NatexFlexibleSequence getFlexibleSequence();
-
-  @Nullable
   NatexMacro getMacro();
 
   @Nullable
   NatexNegation getNegation();
 
   @Nullable
-  NatexRigidSequence getRigidSequence();
+  NatexSequence getSequence();
 
 }

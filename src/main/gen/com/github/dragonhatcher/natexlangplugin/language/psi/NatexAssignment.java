@@ -7,34 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface NatexAssignment extends PsiElement {
 
-  @Nullable
-  NatexAssignment getAssignment();
-
-  @Nullable
-  NatexConjunction getConjunction();
-
-  @Nullable
-  NatexDisjunction getDisjunction();
-
-  @Nullable
-  NatexFlexibleSequence getFlexibleSequence();
-
-  @Nullable
-  NatexKleenePlus getKleenePlus();
-
-  @Nullable
-  NatexKleeneStar getKleeneStar();
-
-  @Nullable
-  NatexMacro getMacro();
-
-  @Nullable
-  NatexNegation getNegation();
-
-  @Nullable
-  NatexOptional getOptional();
-
-  @Nullable
-  NatexRigidSequence getRigidSequence();
+  @NotNull
+  NatexTerm getTerm();
 
 }

@@ -1,9 +1,6 @@
 package com.github.dragonhatcher.natexlangplugin.language;
 
-import com.github.dragonhatcher.natexlangplugin.language.psi.NatexFile;
-import com.github.dragonhatcher.natexlangplugin.language.psi.NatexMultiTerm;
-import com.github.dragonhatcher.natexlangplugin.language.psi.NatexStateName;
-import com.github.dragonhatcher.natexlangplugin.language.psi.NatexSystemKv;
+import com.github.dragonhatcher.natexlangplugin.language.psi.*;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
@@ -20,7 +17,21 @@ public class NatexAnnotator implements Annotator {
                     .range(element)
                     .textAttributes(NatexSyntaxHighlighter.STATE_NAME)
                     .create();
-        } else if (element instanceof NatexMultiTerm && element.getText().matches(".*[{}\\[\\]<>#].*")) {
+        } else if (element instanceof NatexMacro) {
+            holder
+                    .newSilentAnnotation(HighlightSeverity.INFORMATION)
+                    .range(element)
+                    .textAttributes(NatexSyntaxHighlighter.MACRO)
+                    .create();
+        } else if (element instanceof NatexSequence
+                || element instanceof NatexConjunction
+                || element instanceof NatexDisjunction
+                || element instanceof NatexOptional
+                || element instanceof NatexKleeneStar
+                || element instanceof NatexKleenePlus
+                || element instanceof NatexNegation
+                || element instanceof NatexReference
+                || element instanceof NatexAssignment) {
             holder
                     .newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element)
@@ -28,4 +39,5 @@ public class NatexAnnotator implements Annotator {
                     .create();
         }
     }
+
 }

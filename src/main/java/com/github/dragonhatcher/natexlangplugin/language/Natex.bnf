@@ -15,38 +15,34 @@
   psiImplUtilClass="com.github.dragonhatcher.natexlangplugin.language.psi.impl.NatexPsiImplUtil"
 }
 
-natexFile ::= system_obj | user_obj
+natexFile ::= obj
 
-system_obj ::= L_CURLY system_kv ("," system_kv)* ","? R_CURLY
-user_obj ::= L_CURLY user_kv ("," user_kv)* ","? R_CURLY
+obj ::= L_CURLY kv ("," kv)* ","? R_CURLY
 
-system_kv ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE |
-              QUOTE "score" QUOTE ":" |
-              QUOTE "speaker" QUOTE ":" QUOTE "system" QUOTE |
-              QUOTE multi_term QUOTE ":" (QUOTE state_name QUOTE | user_obj | system_obj)
+kv ::=  state | score | speaker | term_kv
 
-user_kv ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE |
-            QUOTE "score" QUOTE ":" |
-            QUOTE "speaker" QUOTE ":" QUOTE "user" QUOTE |
-            QUOTE multi_term QUOTE ":" (QUOTE state_name QUOTE | system_obj | user_obj)
-
+private state ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE {pin=2}
+private score ::= QUOTE "score" QUOTE ":" {pin=2}
+private speaker ::= QUOTE "speaker" QUOTE ":" QUOTE "system" QUOTE {pin=2}
+private term_kv ::= QUOTE multi_term QUOTE ":" (obj | QUOTE state_name QUOTE) {pin=2}
 
 state_name ::= SYMBOL {methods=[getState]}
 
-multi_term ::= term (","? term)*
-private term ::= optional | kleene_star | kleene_plus | non_kleene_term
-private non_kleene_term ::= flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
+multi_term ::= term (","? (QUOTE QUOTE)? term)*
+term ::= optional | kleene_star | kleene_plus | non_kleene_term
+private non_kleene_term ::= sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
 
-flexible_sequence ::= L_BRACKET multi_term R_BRACKET
-rigid_sequence ::= L_BRACKET "!" multi_term R_BRACKET
-conjunction ::= L_ARROW multi_term R_ARROW
-disjunction ::= L_CURLY multi_term R_CURLY
+sequence ::= L_BRACKET "!"? multi_term R_BRACKET {pin=1}
+conjunction ::= L_ARROW multi_term R_ARROW {pin=1}
+disjunction ::= L_CURLY multi_term R_CURLY {pin=1}
 optional ::= non_kleene_term "?"
 kleene_star ::= non_kleene_term "*"
 kleene_plus ::= non_kleene_term "+"
 negation ::= "-" term
 reference ::= "$" SYMBOL
 assignment ::= "$" SYMBOL "=" term
-macro ::= "#" SYMBOL ( L_PAREN macro_arg? (","? " "? macro_arg)* R_PAREN )?
+macro ::= MACRO_NAME ( L_PAREN macro_arg? (","? " "? macro_arg)* R_PAREN )? {pin=1}
 macro_arg ::= MACRO_ARG_STRING | MACRO_LITERAL | macro
 x ::= PUNCUATION
+
+private expr_recover ::= !("," | "}" | "{")

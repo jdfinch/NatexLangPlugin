@@ -11,14 +11,14 @@ import static com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes.*
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
 
-public class NatexFlexibleSequenceImpl extends ASTWrapperPsiElement implements NatexFlexibleSequence {
+public class NatexSequenceImpl extends ASTWrapperPsiElement implements NatexSequence {
 
-  public NatexFlexibleSequenceImpl(@NotNull ASTNode node) {
+  public NatexSequenceImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NatexVisitor visitor) {
-    visitor.visitFlexibleSequence(this);
+    visitor.visitSequence(this);
   }
 
   @Override
@@ -28,9 +28,9 @@ public class NatexFlexibleSequenceImpl extends ASTWrapperPsiElement implements N
   }
 
   @Override
-  @NotNull
+  @Nullable
   public NatexMultiTerm getMultiTerm() {
-    return findNotNullChildByClass(NatexMultiTerm.class);
+    return findChildByClass(NatexMultiTerm.class);
   }
 
 }

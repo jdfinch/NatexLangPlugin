@@ -28,9 +28,9 @@ public class NatexDisjunctionImpl extends ASTWrapperPsiElement implements NatexD
   }
 
   @Override
-  @NotNull
+  @Nullable
   public NatexMultiTerm getMultiTerm() {
-    return findNotNullChildByClass(NatexMultiTerm.class);
+    return findChildByClass(NatexMultiTerm.class);
   }
 
 }

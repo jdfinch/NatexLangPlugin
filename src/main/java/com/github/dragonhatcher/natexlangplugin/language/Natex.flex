@@ -32,6 +32,7 @@ KEYWORD = "state" | "error" | "speaker" | "score"
 
 <WAITING_VALUE> "'" | \"                                    { yybegin(LITERAL); return NatexTypes.QUOTE; }
 {KEYWORD}                                                   { yybegin(WAITING_VALUE);return NatexTypes.KEYWORD; }
+#{SYMBOL}                                                 { yybegin(WAITING_VALUE);return NatexTypes.MACRO_NAME;}
 {SYMBOL}                                                    { yybegin(WAITING_VALUE);return NatexTypes.SYMBOL; }
 `[^`]*`                                                     { yybegin(WAITING_VALUE); return NatexTypes.LITERAL; }
 <LITERAL>{LITERAL}                                          { yybegin(WAITING_VALUE); return NatexTypes.LITERAL; }

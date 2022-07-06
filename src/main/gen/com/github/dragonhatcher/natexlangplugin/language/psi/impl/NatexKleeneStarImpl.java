@@ -47,12 +47,6 @@ public class NatexKleeneStarImpl extends ASTWrapperPsiElement implements NatexKl
 
   @Override
   @Nullable
-  public NatexFlexibleSequence getFlexibleSequence() {
-    return findChildByClass(NatexFlexibleSequence.class);
-  }
-
-  @Override
-  @Nullable
   public NatexMacro getMacro() {
     return findChildByClass(NatexMacro.class);
   }
@@ -65,8 +59,8 @@ public class NatexKleeneStarImpl extends ASTWrapperPsiElement implements NatexKl
 
   @Override
   @Nullable
-  public NatexRigidSequence getRigidSequence() {
-    return findChildByClass(NatexRigidSequence.class);
+  public NatexSequence getSequence() {
+    return findChildByClass(NatexSequence.class);
   }
 
 }

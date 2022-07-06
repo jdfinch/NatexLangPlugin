@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NatexKleeneStar extends PsiElement {
+public interface NatexTerm extends PsiElement {
 
   @Nullable
   NatexAssignment getAssignment();
@@ -17,10 +17,19 @@ public interface NatexKleeneStar extends PsiElement {
   NatexDisjunction getDisjunction();
 
   @Nullable
+  NatexKleenePlus getKleenePlus();
+
+  @Nullable
+  NatexKleeneStar getKleeneStar();
+
+  @Nullable
   NatexMacro getMacro();
 
   @Nullable
   NatexNegation getNegation();
+
+  @Nullable
+  NatexOptional getOptional();
 
   @Nullable
   NatexSequence getSequence();

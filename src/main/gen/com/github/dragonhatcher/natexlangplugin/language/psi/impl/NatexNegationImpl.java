@@ -28,63 +28,9 @@ public class NatexNegationImpl extends ASTWrapperPsiElement implements NatexNega
   }
 
   @Override
-  @Nullable
-  public NatexAssignment getAssignment() {
-    return findChildByClass(NatexAssignment.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexConjunction getConjunction() {
-    return findChildByClass(NatexConjunction.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexDisjunction getDisjunction() {
-    return findChildByClass(NatexDisjunction.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexFlexibleSequence getFlexibleSequence() {
-    return findChildByClass(NatexFlexibleSequence.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexKleenePlus getKleenePlus() {
-    return findChildByClass(NatexKleenePlus.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexKleeneStar getKleeneStar() {
-    return findChildByClass(NatexKleeneStar.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexMacro getMacro() {
-    return findChildByClass(NatexMacro.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexNegation getNegation() {
-    return findChildByClass(NatexNegation.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexOptional getOptional() {
-    return findChildByClass(NatexOptional.class);
-  }
-
-  @Override
-  @Nullable
-  public NatexRigidSequence getRigidSequence() {
-    return findChildByClass(NatexRigidSequence.class);
+  @NotNull
+  public NatexTerm getTerm() {
+    return findNotNullChildByClass(NatexTerm.class);
   }
 
 }

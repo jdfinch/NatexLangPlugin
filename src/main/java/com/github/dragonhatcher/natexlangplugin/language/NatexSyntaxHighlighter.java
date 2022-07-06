@@ -35,6 +35,8 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("NATEX_REGEX", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey SYMBOL =
             createTextAttributesKey("NATEX_SYMBOL", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey MACRO =
+            createTextAttributesKey("NATEX_MACRO", DefaultLanguageHighlighterColors.METADATA);
     public static final TextAttributesKey STATE_NAME =
             createTextAttributesKey("NATEX_STATE_NAME", PURPLE);
     public static final TextAttributesKey BOT_STATEMENT =
@@ -49,7 +51,7 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] REGEX_KEYS = new TextAttributesKey[]{REGEX};
     private static final TextAttributesKey[] SYMBOL_KEYS = new TextAttributesKey[]{SYMBOL};
     private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
-    private static final TextAttributesKey[] STATE_NAME_KEYS = new TextAttributesKey[]{STATE_NAME};
+    private static final TextAttributesKey[] MACRO_KEYS = new TextAttributesKey[]{MACRO};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
     @NotNull
@@ -82,6 +84,9 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
         }
         if (tokenType.equals(NatexTypes.KEYWORD)) {
             return KEY_KEYS;
+        }
+        if (tokenType.equals(NatexTypes.MACRO_NAME)) {
+            return MACRO_KEYS;
         }
         if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             return BAD_CHAR_KEYS;

@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface NatexDisjunction extends PsiElement {
 
-  @NotNull
+  @Nullable
   NatexMultiTerm getMultiTerm();
 
 }

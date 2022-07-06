@@ -11,14 +11,14 @@ import static com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes.*
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
 
-public class NatexOptionalImpl extends ASTWrapperPsiElement implements NatexOptional {
+public class NatexTermImpl extends ASTWrapperPsiElement implements NatexTerm {
 
-  public NatexOptionalImpl(@NotNull ASTNode node) {
+  public NatexTermImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NatexVisitor visitor) {
-    visitor.visitOptional(this);
+    visitor.visitTerm(this);
   }
 
   @Override
@@ -47,6 +47,18 @@ public class NatexOptionalImpl extends ASTWrapperPsiElement implements NatexOpti
 
   @Override
   @Nullable
+  public NatexKleenePlus getKleenePlus() {
+    return findChildByClass(NatexKleenePlus.class);
+  }
+
+  @Override
+  @Nullable
+  public NatexKleeneStar getKleeneStar() {
+    return findChildByClass(NatexKleeneStar.class);
+  }
+
+  @Override
+  @Nullable
   public NatexMacro getMacro() {
     return findChildByClass(NatexMacro.class);
   }
@@ -55,6 +67,12 @@ public class NatexOptionalImpl extends ASTWrapperPsiElement implements NatexOpti
   @Nullable
   public NatexNegation getNegation() {
     return findChildByClass(NatexNegation.class);
+  }
+
+  @Override
+  @Nullable
+  public NatexOptional getOptional() {
+    return findChildByClass(NatexOptional.class);
   }
 
   @Override
