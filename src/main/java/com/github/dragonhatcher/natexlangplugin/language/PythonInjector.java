@@ -35,16 +35,20 @@ public class PythonInjector implements MultiHostInjector {
                 PsiElement key = ((PyKeyValueExpression) kv).getKey();
                 PsiElement value = ((PyKeyValueExpression) kv).getValue();
 
-                boolean isLast = kv == children[children.length - 1];
-                boolean isObject = value instanceof PyDictLiteralExpression;
-                boolean isValid = value instanceof PyDictLiteralExpression || value instanceof PyStringLiteralExpression;
+                if (key instanceof PyStringLiteralExpression) {
+                    boolean isLast = kv == children[children.length - 1];
+                    boolean isObject = value instanceof PyDictLiteralExpression;
+                    boolean isValid = value instanceof PyDictLiteralExpression || value instanceof PyStringLiteralExpression;
 
-                registrar.addPlace(first ? "{\"" : "\"", isValid ? "\":" : "\":,", (PsiLanguageInjectionHost) key, getRange(key));
+                    registrar.addPlace(first ? "{\"" : "\"", isValid ? "\":" : "\":,", (PsiLanguageInjectionHost) key, getRange(key));
 
-                assert value != null;
-                recurseOnChildren(registrar, value, (isLast ? closing : 0) + (isObject ? 1 : 0));
+                    assert value != null;
+                    recurseOnChildren(registrar, value, (isLast ? closing : 0) + (isObject ? 1 : 0));
 
-                first = false;
+                    first = false;
+                } else if (value instanceof PyDictLiteralExpression) {
+                    recurseOnChildren(registrar, value, 1);
+                }
             }
         } else if (element instanceof PyStringLiteralExpression) {
             registrar.addPlace("\"", "\"" + (closing == 0 ? "," : "},".repeat(closing)), (PsiLanguageInjectionHost) element, getRange(element));

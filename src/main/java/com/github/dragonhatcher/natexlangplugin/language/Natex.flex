@@ -20,7 +20,7 @@ WHITE_SPACE=[\ \n\t\f]
 FIRST_VALUE_CHARACTER=[^ \n\f\\] | "\\"{CRLF} | "\\".
 MACRO_LITERAL=[a-z_A-Z.0-9]+
 MACRO_ARG_STRING=`[^`]*(`)?
-LITERAL=([a-z_A-Z@.0-9:]+( [a-z_A-Z@.0-9:]+)*) | \"[^\"]*(\") | `[^`]*(`)
+LITERAL=([a-z_A-Z@.0-9:]+( [a-z_A-Z@.0-9:]+)*) | \"[^\"]*(\")
 SYMBOL=[a-z_A-Z.0-9\-:]+
 REGEX=\/[^\/]+\/
 PUNCUATION = "[" | "]" | "{" | "}" | "(" | ")" | "<" | ">" | "," | "$" | "=" | "#" | "*" | "+" | "!" | "'" | "-" | ","
@@ -33,6 +33,7 @@ KEYWORD = "state" | "error" | "speaker" | "score"
 <WAITING_VALUE> "'" | \"                                    { yybegin(LITERAL); return NatexTypes.QUOTE; }
 {KEYWORD}                                                   { yybegin(WAITING_VALUE);return NatexTypes.KEYWORD; }
 {SYMBOL}                                                    { yybegin(WAITING_VALUE);return NatexTypes.SYMBOL; }
+`[^`]*`                                                     { yybegin(WAITING_VALUE); return NatexTypes.LITERAL; }
 <LITERAL>{LITERAL}                                          { yybegin(WAITING_VALUE); return NatexTypes.LITERAL; }
 {MACRO_LITERAL}                                             { yybegin(WAITING_VALUE);return NatexTypes.MACRO_LITERAL; }
 {MACRO_ARG_STRING}                                          { yybegin(WAITING_VALUE);return NatexTypes.MACRO_ARG_STRING; }
