@@ -13,8 +13,21 @@
   tokenTypeClass="com.github.dragonhatcher.natexlangplugin.language.psi.NatexTokenType"
 }
 
-natexFile ::= item_*
+natexFile ::= term (","? " "? term)*
 
-private item_ ::= (property|COMMENT|CRLF)
+private term ::= optional | kleene_star | kleene_plus | non_kleene_term
+private non_kleene_term ::= flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY
+flexible_sequence ::= "[" " "? term (","? " "? term)* "]"
+rigid_sequence ::= "[!" " "? term (","? " "? term)* "]"
+conjunction ::= "<" term (","? " "? term)* ">"
+disjunction ::= "{" term (","? " "? term)* "}"
+optional ::= non_kleene_term "?"
+kleene_star ::= non_kleene_term "*"
+kleene_plus ::= non_kleene_term "+"
+negation ::= "-" term
+reference ::= "$" SYMBOL
+assignment ::= "$" SYMBOL "=" term
+macro ::= "#" SYMBOL ( "(" macro_arg? (","? " "? macro_arg)* ")" )?
+macro_arg ::= MACRO_ARG_STRING | MACRO_LITERAL | macro
+x ::= PUNCUATION

@@ -11,20 +11,26 @@ import static com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes.*
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
 
-public class NatexPropertyImpl extends ASTWrapperPsiElement implements NatexProperty {
+public class NatexMacroImpl extends ASTWrapperPsiElement implements NatexMacro {
 
-  public NatexPropertyImpl(@NotNull ASTNode node) {
+  public NatexMacroImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NatexVisitor visitor) {
-    visitor.visitProperty(this);
+    visitor.visitMacro(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof NatexVisitor) accept((NatexVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public List<NatexMacroArg> getMacroArgList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexMacroArg.class);
   }
 
 }

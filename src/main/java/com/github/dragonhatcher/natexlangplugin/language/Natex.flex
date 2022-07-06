@@ -18,27 +18,33 @@ import com.intellij.psi.TokenType;
 CRLF=\R
 WHITE_SPACE=[\ \n\t\f]
 FIRST_VALUE_CHARACTER=[^ \n\f\\] | "\\"{CRLF} | "\\".
-VALUE_CHARACTER=[^\n\f\\] | "\\"{CRLF} | "\\".
-END_OF_LINE_COMMENT=("#"|"!")[^\r\n]*
-SEPARATOR=[:=]
-KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
+MACRO_LITERAL=[a-z_A-Z.0-9]+
+MACRO_ARG_STRING=`[^`]+`
+LITERAL=([a-z_A-Z@.0-9:]+( [a-z_A-Z@.0-9:]+)*) | \"[^\"]+\" | `[^`]+`
+SYMBOL=[a-z_A-Z.0-9]+
+REGEX=\/[^\/]+\/
+PUNCUATION = "[" | "]" | "{" | "}" | "(" | ")" | "<" | ">" | "," | "$" | "=" | "#" | "*" | "+"
 
 %state WAITING_VALUE
 
 %%
 
-<YYINITIAL> {END_OF_LINE_COMMENT}                           { yybegin(YYINITIAL); return NatexTypes.COMMENT; }
+{SYMBOL}                                                    { return NatexTypes.SYMBOL; }
+{LITERAL}                                                   { return NatexTypes.LITERAL; }
+{MACRO_LITERAL}                                             { return NatexTypes.MACRO_LITERAL; }
+{MACRO_ARG_STRING}                                          { return NatexTypes.MACRO_ARG_STRING; }
+{REGEX}                                                     { return NatexTypes.REGEX; }
+{PUNCUATION}                                                { return NatexTypes.PUNCUATION; }
 
-<YYINITIAL> {KEY_CHARACTER}+                                { yybegin(YYINITIAL); return NatexTypes.KEY; }
+//<YYINITIAL> {END_OF_LINE_COMMENT}                           { yybegin(YYINITIAL); return NatexTypes.COMMENT; }
+//
+//<YYINITIAL> {KEY_CHARACTER}+                                { yybegin(YYINITIAL); return NatexTypes.KEY; }
+//
+//<YYINITIAL> {SEPARATOR}                                     { yybegin(WAITING_VALUE); return NatexTypes.SEPARATOR; }
 
-<YYINITIAL> {SEPARATOR}                                     { yybegin(WAITING_VALUE); return NatexTypes.SEPARATOR; }
 
-<WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+//<WAITING_VALUE> {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*   { yybegin(YYINITIAL); return NatexTypes.VALUE; }
 
-<WAITING_VALUE> {WHITE_SPACE}+                              { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
-
-<WAITING_VALUE> {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*   { yybegin(YYINITIAL); return NatexTypes.VALUE; }
-
-({CRLF}|{WHITE_SPACE})+                                     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
+({CRLF}|{WHITE_SPACE})+                                     { return TokenType.WHITE_SPACE; }
 
 [^]                                                         { return TokenType.BAD_CHARACTER; }
