@@ -22,6 +22,7 @@ public interface NatexTypes {
   IElementType RIGID_SEQUENCE = new NatexElementType("RIGID_SEQUENCE");
   IElementType X = new NatexElementType("X");
 
+  IElementType KEYWORD = new NatexTokenType("KEYWORD");
   IElementType LITERAL = new NatexTokenType("LITERAL");
   IElementType L_ARROW = new NatexTokenType("L_ARROW");
   IElementType L_BRACKET = new NatexTokenType("L_BRACKET");
@@ -35,6 +36,7 @@ public interface NatexTypes {
   IElementType R_BRACKET = new NatexTokenType("R_BRACKET");
   IElementType R_CURLY = new NatexTokenType("R_CURLY");
   IElementType R_PAREN = new NatexTokenType("R_PAREN");
+  IElementType STATE = new NatexTokenType("STATE");
   IElementType SYMBOL = new NatexTokenType("SYMBOL");
 
   class Factory {

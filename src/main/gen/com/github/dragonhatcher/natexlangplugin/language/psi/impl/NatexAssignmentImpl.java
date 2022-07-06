@@ -81,7 +81,6 @@ public class NatexAssignmentImpl extends ASTWrapperPsiElement implements NatexAs
     return findChildByClass(NatexOptional.class);
   }
 
-
   @Override
   @Nullable
   public NatexRigidSequence getRigidSequence() {

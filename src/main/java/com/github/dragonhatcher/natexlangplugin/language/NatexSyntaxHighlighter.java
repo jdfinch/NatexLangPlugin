@@ -33,6 +33,7 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] LITERAL_KEYS = new TextAttributesKey[]{LITERAL};
     private static final TextAttributesKey[] REGEX_KEYS = new TextAttributesKey[]{REGEX};
     private static final TextAttributesKey[] SYMBOL_KEYS = new TextAttributesKey[]{SYMBOL};
+    private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
     @NotNull
@@ -62,6 +63,9 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
         }
         if (tokenType.equals(NatexTypes.SYMBOL)) {
             return SYMBOL_KEYS;
+        }
+        if (tokenType.equals(NatexTypes.KEYWORD)) {
+            return KEY_KEYS;
         }
         if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             return BAD_CHAR_KEYS;

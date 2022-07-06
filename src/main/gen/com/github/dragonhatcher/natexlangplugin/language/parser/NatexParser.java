@@ -328,50 +328,61 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // term (","? " "? term)*
+  // KEYWORD | term (","? " "? term)*
   static boolean natexFile(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "natexFile")) return false;
     boolean r;
     Marker m = enter_section_(b);
+    r = consumeToken(b, KEYWORD);
+    if (!r) r = natexFile_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // term (","? " "? term)*
+  private static boolean natexFile_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "natexFile_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
     r = term(b, l + 1);
-    r = r && natexFile_1(b, l + 1);
+    r = r && natexFile_1_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // (","? " "? term)*
-  private static boolean natexFile_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "natexFile_1")) return false;
+  private static boolean natexFile_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "natexFile_1_1")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!natexFile_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "natexFile_1", c)) break;
+      if (!natexFile_1_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "natexFile_1_1", c)) break;
     }
     return true;
   }
 
   // ","? " "? term
-  private static boolean natexFile_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "natexFile_1_0")) return false;
+  private static boolean natexFile_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "natexFile_1_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = natexFile_1_0_0(b, l + 1);
-    r = r && natexFile_1_0_1(b, l + 1);
+    r = natexFile_1_1_0_0(b, l + 1);
+    r = r && natexFile_1_1_0_1(b, l + 1);
     r = r && term(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // ","?
-  private static boolean natexFile_1_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "natexFile_1_0_0")) return false;
+  private static boolean natexFile_1_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "natexFile_1_1_0_0")) return false;
     consumeToken(b, ",");
     return true;
   }
 
   // " "?
-  private static boolean natexFile_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "natexFile_1_0_1")) return false;
+  private static boolean natexFile_1_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "natexFile_1_1_0_1")) return false;
     consumeToken(b, " ");
     return true;
   }
@@ -389,7 +400,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL
+  // flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE
   static boolean non_kleene_term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "non_kleene_term")) return false;
     boolean r;
@@ -404,6 +415,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
     if (!r) r = macro(b, l + 1);
     if (!r) r = consumeToken(b, LITERAL);
     if (!r) r = consumeToken(b, SYMBOL);
+    if (!r) r = consumeToken(b, STATE);
     return r;
   }
 

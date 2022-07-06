@@ -24,11 +24,13 @@ LITERAL=([a-z_A-Z@.0-9:]+( [a-z_A-Z@.0-9:]+)*) | \"[^\"]+\" | `[^`]+`
 SYMBOL=[a-z_A-Z.0-9]+
 REGEX=\/[^\/]+\/
 PUNCUATION = "[" | "]" | "{" | "}" | "(" | ")" | "<" | ">" | "," | "$" | "=" | "#" | "*" | "+" | "!"
+KEYWORD = "state" | "error" | "speaker" | "score"
 
 %state WAITING_VALUE
 
 %%
 
+{KEYWORD}                                                   { return NatexTypes.KEYWORD; }
 {SYMBOL}                                                    { return NatexTypes.SYMBOL; }
 {LITERAL}                                                   { return NatexTypes.LITERAL; }
 {MACRO_LITERAL}                                             { return NatexTypes.MACRO_LITERAL; }

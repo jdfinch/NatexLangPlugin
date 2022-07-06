@@ -13,10 +13,10 @@
   tokenTypeClass="com.github.dragonhatcher.natexlangplugin.language.psi.NatexTokenType"
 }
 
-natexFile ::= term (","? " "? term)*
+natexFile ::= KEYWORD | term (","? " "? term)*
 
 private term ::= optional | kleene_star | kleene_plus | non_kleene_term
-private non_kleene_term ::= flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL
+private non_kleene_term ::= flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE
 
 flexible_sequence ::= L_BRACKET " "? term (","? " "? term)* R_BRACKET
 rigid_sequence ::= L_BRACKET "!" " "? term (","? " "? term)* R_BRACKET
