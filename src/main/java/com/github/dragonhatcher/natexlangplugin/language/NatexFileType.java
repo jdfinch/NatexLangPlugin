@@ -35,7 +35,7 @@ public class NatexFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return null;
+        return NatexIcons.FILE;
     }
 
 }

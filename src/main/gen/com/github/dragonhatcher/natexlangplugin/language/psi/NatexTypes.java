@@ -20,6 +20,7 @@ public interface NatexTypes {
   IElementType OPTIONAL = new NatexElementType("OPTIONAL");
   IElementType REFERENCE = new NatexElementType("REFERENCE");
   IElementType RIGID_SEQUENCE = new NatexElementType("RIGID_SEQUENCE");
+  IElementType STATE_NAME = new NatexElementType("STATE_NAME");
   IElementType X = new NatexElementType("X");
 
   IElementType KEYWORD = new NatexTokenType("KEYWORD");
@@ -77,6 +78,9 @@ public interface NatexTypes {
       }
       else if (type == RIGID_SEQUENCE) {
         return new NatexRigidSequenceImpl(node);
+      }
+      else if (type == STATE_NAME) {
+        return new NatexStateNameImpl(node);
       }
       else if (type == X) {
         return new NatexXImpl(node);

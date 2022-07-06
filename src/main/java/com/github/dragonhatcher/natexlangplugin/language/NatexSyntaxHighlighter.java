@@ -5,14 +5,22 @@ import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
+import com.intellij.openapi.editor.markup.EffectType;
+import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.ui.JBColor;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
 public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
+
+    private static final Color PURPLE_COL = new JBColor(new Color(152, 126, 170), new Color(152, 126, 170));
+    private static final TextAttributes PURPLE = new TextAttributes(PURPLE_COL, null, null, EffectType.BOLD_DOTTED_LINE, Font.PLAIN);
 
     public static final TextAttributesKey PUNCTUATION =
             createTextAttributesKey("NATEX_PUNCTUATION", DefaultLanguageHighlighterColors.OPERATION_SIGN);
@@ -24,6 +32,8 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("NATEX_REGEX", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey SYMBOL =
             createTextAttributesKey("NATEX_SYMBOL", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey STATE_NAME =
+            createTextAttributesKey("NATEX_STATE_NAME", PURPLE);
     public static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("NATEX_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 
@@ -34,6 +44,7 @@ public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] REGEX_KEYS = new TextAttributesKey[]{REGEX};
     private static final TextAttributesKey[] SYMBOL_KEYS = new TextAttributesKey[]{SYMBOL};
     private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
+    private static final TextAttributesKey[] STATE_NAME_KEYS = new TextAttributesKey[]{STATE_NAME};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
     @NotNull

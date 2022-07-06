@@ -55,6 +55,10 @@ public class NatexVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStateName(@NotNull NatexStateName o) {
+    visitPsiElement(o);
+  }
+
   public void visitX(@NotNull NatexX o) {
     visitPsiElement(o);
   }

@@ -11,9 +11,13 @@
   elementTypeHolderClass="com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes"
   elementTypeClass="com.github.dragonhatcher.natexlangplugin.language.psi.NatexElementType"
   tokenTypeClass="com.github.dragonhatcher.natexlangplugin.language.psi.NatexTokenType"
+
+  psiImplUtilClass="com.github.dragonhatcher.natexlangplugin.language.psi.impl.NatexPsiImplUtil"
 }
 
-natexFile ::= KEYWORD | term (","? " "? term)*
+natexFile ::= KEYWORD | state_name | term (","? " "? term)*
+
+state_name ::= SYMBOL {methods=[getState]}
 
 private term ::= optional | kleene_star | kleene_plus | non_kleene_term
 private non_kleene_term ::= flexible_sequence | rigid_sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE

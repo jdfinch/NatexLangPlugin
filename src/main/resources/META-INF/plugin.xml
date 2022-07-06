@@ -32,6 +32,14 @@
         <lang.quoteHandler
                 language="Natex"
                 implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexQuoteHandler"/>
+
+        <codeInsight.lineMarkerProvider
+                language="Natex"
+                implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexLineMarkerProvider"/>
+
+        <annotator
+                language="Natex"
+                implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexAnnotator"/>
     </extensions>
 
     <applicationListeners>
