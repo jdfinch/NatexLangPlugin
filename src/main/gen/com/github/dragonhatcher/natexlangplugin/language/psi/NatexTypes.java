@@ -16,11 +16,16 @@ public interface NatexTypes {
   IElementType KLEENE_STAR = new NatexElementType("KLEENE_STAR");
   IElementType MACRO = new NatexElementType("MACRO");
   IElementType MACRO_ARG = new NatexElementType("MACRO_ARG");
+  IElementType MULTI_TERM = new NatexElementType("MULTI_TERM");
   IElementType NEGATION = new NatexElementType("NEGATION");
   IElementType OPTIONAL = new NatexElementType("OPTIONAL");
   IElementType REFERENCE = new NatexElementType("REFERENCE");
   IElementType RIGID_SEQUENCE = new NatexElementType("RIGID_SEQUENCE");
   IElementType STATE_NAME = new NatexElementType("STATE_NAME");
+  IElementType SYSTEM_KV = new NatexElementType("SYSTEM_KV");
+  IElementType SYSTEM_OBJ = new NatexElementType("SYSTEM_OBJ");
+  IElementType USER_KV = new NatexElementType("USER_KV");
+  IElementType USER_OBJ = new NatexElementType("USER_OBJ");
   IElementType X = new NatexElementType("X");
 
   IElementType KEYWORD = new NatexTokenType("KEYWORD");
@@ -31,7 +36,9 @@ public interface NatexTypes {
   IElementType L_PAREN = new NatexTokenType("L_PAREN");
   IElementType MACRO_ARG_STRING = new NatexTokenType("MACRO_ARG_STRING");
   IElementType MACRO_LITERAL = new NatexTokenType("MACRO_LITERAL");
+  IElementType OBJ = new NatexTokenType("obj");
   IElementType PUNCUATION = new NatexTokenType("PUNCUATION");
+  IElementType QUOTE = new NatexTokenType("QUOTE");
   IElementType REGEX = new NatexTokenType("REGEX");
   IElementType R_ARROW = new NatexTokenType("R_ARROW");
   IElementType R_BRACKET = new NatexTokenType("R_BRACKET");
@@ -67,6 +74,9 @@ public interface NatexTypes {
       else if (type == MACRO_ARG) {
         return new NatexMacroArgImpl(node);
       }
+      else if (type == MULTI_TERM) {
+        return new NatexMultiTermImpl(node);
+      }
       else if (type == NEGATION) {
         return new NatexNegationImpl(node);
       }
@@ -81,6 +91,18 @@ public interface NatexTypes {
       }
       else if (type == STATE_NAME) {
         return new NatexStateNameImpl(node);
+      }
+      else if (type == SYSTEM_KV) {
+        return new NatexSystemKvImpl(node);
+      }
+      else if (type == SYSTEM_OBJ) {
+        return new NatexSystemObjImpl(node);
+      }
+      else if (type == USER_KV) {
+        return new NatexUserKvImpl(node);
+      }
+      else if (type == USER_OBJ) {
+        return new NatexUserObjImpl(node);
       }
       else if (type == X) {
         return new NatexXImpl(node);

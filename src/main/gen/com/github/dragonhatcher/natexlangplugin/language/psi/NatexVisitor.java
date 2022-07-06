@@ -39,6 +39,10 @@ public class NatexVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitMultiTerm(@NotNull NatexMultiTerm o) {
+    visitPsiElement(o);
+  }
+
   public void visitNegation(@NotNull NatexNegation o) {
     visitPsiElement(o);
   }
@@ -56,6 +60,22 @@ public class NatexVisitor extends PsiElementVisitor {
   }
 
   public void visitStateName(@NotNull NatexStateName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSystemKv(@NotNull NatexSystemKv o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSystemObj(@NotNull NatexSystemObj o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUserKv(@NotNull NatexUserKv o) {
+    visitPsiElement(o);
+  }
+
+  public void visitUserObj(@NotNull NatexUserObj o) {
     visitPsiElement(o);
   }
 

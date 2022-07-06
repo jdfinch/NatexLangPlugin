@@ -20,7 +20,10 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
 public class NatexSyntaxHighlighter extends SyntaxHighlighterBase {
 
     private static final Color PURPLE_COL = new JBColor(new Color(152, 126, 170), new Color(152, 126, 170));
+    private static final Color YELLOW_COL = new JBColor(new Color(255, 199, 109), new Color(255, 199, 109));
+
     private static final TextAttributes PURPLE = new TextAttributes(PURPLE_COL, null, null, EffectType.BOLD_DOTTED_LINE, Font.PLAIN);
+    private static final TextAttributes YELLOW = new TextAttributes(YELLOW_COL, null, null, EffectType.BOLD_DOTTED_LINE, Font.PLAIN);
 
     public static final TextAttributesKey PUNCTUATION =
             createTextAttributesKey("NATEX_PUNCTUATION", DefaultLanguageHighlighterColors.OPERATION_SIGN);

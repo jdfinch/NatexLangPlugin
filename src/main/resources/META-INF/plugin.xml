@@ -42,7 +42,7 @@
                 language="Natex"
                 implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexAnnotator"/>
 
-        <languageInjector implementation="com.github.dragonhatcher.natexlangplugin.language.PythonInjector"/>
+        <multiHostInjector implementation="com.github.dragonhatcher.natexlangplugin.language.PythonInjector"/>
     </extensions>
 
     <applicationListeners>
