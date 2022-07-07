@@ -1,6 +1,7 @@
 package com.github.dragonhatcher.natexlangplugin.language;
 
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
+import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
@@ -17,7 +18,26 @@ public class NatexAnnotator implements Annotator {
                     .range(element)
                     .textAttributes(NatexSyntaxHighlighter.STATE_NAME)
                     .create();
-        } else if (element instanceof NatexMacro) {
+        }
+
+//        if (element instanceof NatexStateRef) {
+//            if (NatexUtil.findStateNameDeclarations(
+//                    element,
+//                    ((NatexStateRef) element).getReferencedStateName()
+//            ).isEmpty()) {
+//                var symbol = element.getNode().findChildByType(NatexTypes.SYMBOL);
+//
+//                holder
+//                        .newAnnotation(HighlightSeverity.WARNING, "Unknown state.")
+//                        .range(symbol == null ? element.getNode() : symbol)
+//                        .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+//                        .create();
+//            }
+//        } else if (element instanceof NatexStateDeclaration) {
+//
+//        }
+
+        if (element instanceof NatexMacro) {
             holder
                     .newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .range(element)
@@ -30,7 +50,7 @@ public class NatexAnnotator implements Annotator {
                 || element instanceof NatexKleeneStar
                 || element instanceof NatexKleenePlus
                 || element instanceof NatexNegation
-                || element instanceof NatexReference
+                || element instanceof NatexVarReference
                 || element instanceof NatexAssignment) {
             holder
                     .newSilentAnnotation(HighlightSeverity.INFORMATION)

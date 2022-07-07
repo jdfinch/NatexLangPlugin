@@ -19,18 +19,19 @@ natexFile ::= obj
 
 obj ::= L_CURLY kv ("," kv)* ","? R_CURLY
 
-kv ::=  state | score | speaker | term_kv
+kv ::=  state_declaration | score | speaker | term_kv
 
-private state ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE {pin=2}
-private score ::= QUOTE "score" QUOTE ":" {pin=2}
-private speaker ::= QUOTE "speaker" QUOTE ":" QUOTE ("system" | "user") QUOTE {pin=2}
-private term_kv ::= QUOTE multi_term QUOTE ":" (obj | QUOTE state_name QUOTE) {pin=2}
+state_declaration ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE {pin=2 methods=[getDeclaredStateName]}
+score ::= QUOTE "score" QUOTE ":" {pin=2}
+speaker ::= QUOTE "speaker" QUOTE ":" QUOTE ("system" | "user") QUOTE {pin=2}
+term_kv ::= QUOTE multi_term QUOTE ":" (obj | state_ref) {pin=2}
 
-state_name ::= SYMBOL {methods=[getState]}
+state_name ::= SYMBOL {methods=[getName]}
+state_ref ::= QUOTE state_name QUOTE {pin=1 methods=[getReferencedStateName]}
 
 multi_term ::= term (","? (QUOTE QUOTE)? term)*
 term ::= optional | kleene_star | kleene_plus | non_kleene_term
-private non_kleene_term ::= sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
+private non_kleene_term ::= sequence | conjunction | disjunction | negation | REGEX | var_reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
 
 sequence ::= L_BRACKET "!"? multi_term R_BRACKET {pin=1}
 conjunction ::= L_ARROW multi_term R_ARROW {pin=1}
@@ -39,10 +40,8 @@ optional ::= non_kleene_term "?"
 kleene_star ::= non_kleene_term "*"
 kleene_plus ::= non_kleene_term "+"
 negation ::= "-" term
-reference ::= "$" SYMBOL
-assignment ::= "$" SYMBOL "=" term
+var_reference ::= "$" SYMBOL
+assignment ::= "$" SYMBOL "=" term {pin=3}
 macro ::= MACRO_NAME ( L_PAREN macro_arg? (","? " "? macro_arg)* R_PAREN )? {pin=1}
 macro_arg ::= MACRO_ARG_STRING | MACRO_LITERAL | macro
 x ::= PUNCUATION
-
-private expr_recover ::= !("," | "}" | "{")

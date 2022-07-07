@@ -63,4 +63,10 @@ public class NatexKleenePlusImpl extends ASTWrapperPsiElement implements NatexKl
     return findChildByClass(NatexSequence.class);
   }
 
+  @Override
+  @Nullable
+  public NatexVarReference getVarReference() {
+    return findChildByClass(NatexVarReference.class);
+  }
+
 }

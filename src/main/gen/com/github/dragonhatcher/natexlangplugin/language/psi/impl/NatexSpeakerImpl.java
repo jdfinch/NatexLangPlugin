@@ -11,14 +11,14 @@ import static com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes.*
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
 
-public class NatexReferenceImpl extends ASTWrapperPsiElement implements NatexReference {
+public class NatexSpeakerImpl extends ASTWrapperPsiElement implements NatexSpeaker {
 
-  public NatexReferenceImpl(@NotNull ASTNode node) {
+  public NatexSpeakerImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NatexVisitor visitor) {
-    visitor.visitReference(this);
+    visitor.visitSpeaker(this);
   }
 
   @Override

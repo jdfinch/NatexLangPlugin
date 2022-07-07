@@ -25,4 +25,7 @@ public interface NatexOptional extends PsiElement {
   @Nullable
   NatexSequence getSequence();
 
+  @Nullable
+  NatexVarReference getVarReference();
+
 }

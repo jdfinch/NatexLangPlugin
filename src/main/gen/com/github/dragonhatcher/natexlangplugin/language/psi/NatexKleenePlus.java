@@ -25,4 +25,7 @@ public interface NatexKleenePlus extends PsiElement {
   @Nullable
   NatexSequence getSequence();
 
+  @Nullable
+  NatexVarReference getVarReference();
+
 }

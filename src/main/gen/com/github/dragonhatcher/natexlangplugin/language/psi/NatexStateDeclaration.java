@@ -5,8 +5,11 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NatexStateName extends PsiElement {
+public interface NatexStateDeclaration extends PsiElement {
 
-  String getName();
+  @Nullable
+  NatexStateName getStateName();
+
+  String getDeclaredStateName();
 
 }

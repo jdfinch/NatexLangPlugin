@@ -34,4 +34,7 @@ public interface NatexTerm extends PsiElement {
   @Nullable
   NatexSequence getSequence();
 
+  @Nullable
+  NatexVarReference getVarReference();
+
 }

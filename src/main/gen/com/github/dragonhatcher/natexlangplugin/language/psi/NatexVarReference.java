@@ -5,8 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NatexStateName extends PsiElement {
-
-  String getName();
+public interface NatexVarReference extends PsiElement {
 
 }

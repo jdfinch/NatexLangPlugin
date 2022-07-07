@@ -5,8 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface NatexStateName extends PsiElement {
+public interface NatexTermKv extends PsiElement {
 
-  String getName();
+  @NotNull
+  NatexMultiTerm getMultiTerm();
+
+  @Nullable
+  NatexObj getObj();
+
+  @Nullable
+  NatexStateRef getStateRef();
 
 }

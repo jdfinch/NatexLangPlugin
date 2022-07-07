@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface NatexAssignment extends PsiElement {
 
-  @NotNull
+  @Nullable
   NatexTerm getTerm();
 
 }

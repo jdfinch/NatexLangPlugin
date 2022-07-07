@@ -20,10 +20,15 @@ public interface NatexTypes {
   IElementType NEGATION = new NatexElementType("NEGATION");
   IElementType OBJ = new NatexElementType("OBJ");
   IElementType OPTIONAL = new NatexElementType("OPTIONAL");
-  IElementType REFERENCE = new NatexElementType("REFERENCE");
+  IElementType SCORE = new NatexElementType("SCORE");
   IElementType SEQUENCE = new NatexElementType("SEQUENCE");
+  IElementType SPEAKER = new NatexElementType("SPEAKER");
+  IElementType STATE_DECLARATION = new NatexElementType("STATE_DECLARATION");
   IElementType STATE_NAME = new NatexElementType("STATE_NAME");
+  IElementType STATE_REF = new NatexElementType("STATE_REF");
   IElementType TERM = new NatexElementType("TERM");
+  IElementType TERM_KV = new NatexElementType("TERM_KV");
+  IElementType VAR_REFERENCE = new NatexElementType("VAR_REFERENCE");
   IElementType X = new NatexElementType("X");
 
   IElementType KEYWORD = new NatexTokenType("KEYWORD");
@@ -84,17 +89,32 @@ public interface NatexTypes {
       else if (type == OPTIONAL) {
         return new NatexOptionalImpl(node);
       }
-      else if (type == REFERENCE) {
-        return new NatexReferenceImpl(node);
+      else if (type == SCORE) {
+        return new NatexScoreImpl(node);
       }
       else if (type == SEQUENCE) {
         return new NatexSequenceImpl(node);
       }
+      else if (type == SPEAKER) {
+        return new NatexSpeakerImpl(node);
+      }
+      else if (type == STATE_DECLARATION) {
+        return new NatexStateDeclarationImpl(node);
+      }
       else if (type == STATE_NAME) {
         return new NatexStateNameImpl(node);
       }
+      else if (type == STATE_REF) {
+        return new NatexStateRefImpl(node);
+      }
       else if (type == TERM) {
         return new NatexTermImpl(node);
+      }
+      else if (type == TERM_KV) {
+        return new NatexTermKvImpl(node);
+      }
+      else if (type == VAR_REFERENCE) {
+        return new NatexVarReferenceImpl(node);
       }
       else if (type == X) {
         return new NatexXImpl(node);

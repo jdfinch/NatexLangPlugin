@@ -28,9 +28,9 @@ public class NatexAssignmentImpl extends ASTWrapperPsiElement implements NatexAs
   }
 
   @Override
-  @NotNull
+  @Nullable
   public NatexTerm getTerm() {
-    return findNotNullChildByClass(NatexTerm.class);
+    return findChildByClass(NatexTerm.class);
   }
 
 }

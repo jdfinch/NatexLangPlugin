@@ -11,14 +11,14 @@ import static com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes.*
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
 
-public class NatexStateNameImpl extends ASTWrapperPsiElement implements NatexStateName {
+public class NatexTermKvImpl extends ASTWrapperPsiElement implements NatexTermKv {
 
-  public NatexStateNameImpl(@NotNull ASTNode node) {
+  public NatexTermKvImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NatexVisitor visitor) {
-    visitor.visitStateName(this);
+    visitor.visitTermKv(this);
   }
 
   @Override
@@ -28,8 +28,21 @@ public class NatexStateNameImpl extends ASTWrapperPsiElement implements NatexSta
   }
 
   @Override
-  public String getName() {
-    return NatexPsiImplUtil.getName(this);
+  @NotNull
+  public NatexMultiTerm getMultiTerm() {
+    return findNotNullChildByClass(NatexMultiTerm.class);
+  }
+
+  @Override
+  @Nullable
+  public NatexObj getObj() {
+    return findChildByClass(NatexObj.class);
+  }
+
+  @Override
+  @Nullable
+  public NatexStateRef getStateRef() {
+    return findChildByClass(NatexStateRef.class);
   }
 
 }

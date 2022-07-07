@@ -63,7 +63,7 @@ public class PythonInjector implements MultiHostInjector {
 
     @Override
     synchronized public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement element) {
-        if (element instanceof PyDictLiteralExpression) {
+        if (element instanceof PyDictLiteralExpression && !(element.getParent() instanceof PyKeyValueExpression)) {
             start(registrar);
 
             recurseOnChildren(element);
@@ -96,6 +96,7 @@ public class PythonInjector implements MultiHostInjector {
                     write("\"", key, "\":");
                     recurseOnChildren(value);
                 } else if (value instanceof PyDictLiteralExpression) {
+                    write("'expr':");
                     recurseOnChildren(value);
                 }
 

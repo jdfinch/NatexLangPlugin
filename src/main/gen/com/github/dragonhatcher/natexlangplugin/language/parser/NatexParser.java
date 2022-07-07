@@ -39,14 +39,15 @@ public class NatexParser implements PsiParser, LightPsiParser {
   // "$" SYMBOL "=" term
   public static boolean assignment(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "assignment")) return false;
-    boolean r;
+    boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, ASSIGNMENT, "<assignment>");
     r = consumeToken(b, "$");
     r = r && consumeToken(b, SYMBOL);
     r = r && consumeToken(b, "=");
+    p = r; // pin = 3
     r = r && term(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -80,27 +81,6 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !("," | "}" | "{")
-  static boolean expr_recover(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "expr_recover")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !expr_recover_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // "," | "}" | "{"
-  private static boolean expr_recover_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "expr_recover_0")) return false;
-    boolean r;
-    r = consumeToken(b, ",");
-    if (!r) r = consumeToken(b, "}");
-    if (!r) r = consumeToken(b, "{");
-    return r;
-  }
-
-  /* ********************************************************** */
   // non_kleene_term "+"
   public static boolean kleene_plus(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "kleene_plus")) return false;
@@ -125,13 +105,13 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // state | score | speaker | term_kv
+  // state_declaration | score | speaker | term_kv
   public static boolean kv(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "kv")) return false;
     if (!nextTokenIs(b, QUOTE)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = state(b, l + 1);
+    r = state_declaration(b, l + 1);
     if (!r) r = score(b, l + 1);
     if (!r) r = speaker(b, l + 1);
     if (!r) r = term_kv(b, l + 1);
@@ -308,7 +288,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // sequence | conjunction | disjunction | negation | REGEX | reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
+  // sequence | conjunction | disjunction | negation | REGEX | var_reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
   static boolean non_kleene_term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "non_kleene_term")) return false;
     boolean r;
@@ -317,7 +297,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
     if (!r) r = disjunction(b, l + 1);
     if (!r) r = negation(b, l + 1);
     if (!r) r = consumeToken(b, REGEX);
-    if (!r) r = reference(b, l + 1);
+    if (!r) r = var_reference(b, l + 1);
     if (!r) r = assignment(b, l + 1);
     if (!r) r = macro(b, l + 1);
     if (!r) r = consumeToken(b, LITERAL);
@@ -385,24 +365,12 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // "$" SYMBOL
-  public static boolean reference(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "reference")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, REFERENCE, "<reference>");
-    r = consumeToken(b, "$");
-    r = r && consumeToken(b, SYMBOL);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
   // QUOTE "score" QUOTE ":"
-  static boolean score(PsiBuilder b, int l) {
+  public static boolean score(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "score")) return false;
     if (!nextTokenIs(b, QUOTE)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
+    Marker m = enter_section_(b, l, _NONE_, SCORE, null);
     r = consumeToken(b, QUOTE);
     r = r && consumeToken(b, "score");
     p = r; // pin = 2
@@ -437,11 +405,11 @@ public class NatexParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // QUOTE "speaker" QUOTE ":" QUOTE ("system" | "user") QUOTE
-  static boolean speaker(PsiBuilder b, int l) {
+  public static boolean speaker(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "speaker")) return false;
     if (!nextTokenIs(b, QUOTE)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
+    Marker m = enter_section_(b, l, _NONE_, SPEAKER, null);
     r = consumeToken(b, QUOTE);
     r = r && consumeToken(b, "speaker");
     p = r; // pin = 2
@@ -465,11 +433,11 @@ public class NatexParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // QUOTE "state" QUOTE ":" QUOTE state_name QUOTE
-  static boolean state(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "state")) return false;
+  public static boolean state_declaration(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "state_declaration")) return false;
     if (!nextTokenIs(b, QUOTE)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
+    Marker m = enter_section_(b, l, _NONE_, STATE_DECLARATION, null);
     r = consumeToken(b, QUOTE);
     r = r && consumeToken(b, "state");
     p = r; // pin = 2
@@ -495,6 +463,21 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // QUOTE state_name QUOTE
+  public static boolean state_ref(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "state_ref")) return false;
+    if (!nextTokenIs(b, QUOTE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, STATE_REF, null);
+    r = consumeToken(b, QUOTE);
+    p = r; // pin = 1
+    r = r && report_error_(b, state_name(b, l + 1));
+    r = p && consumeToken(b, QUOTE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  /* ********************************************************** */
   // optional | kleene_star | kleene_plus | non_kleene_term
   public static boolean term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "term")) return false;
@@ -509,12 +492,12 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // QUOTE multi_term QUOTE ":" (obj | QUOTE state_name QUOTE)
-  static boolean term_kv(PsiBuilder b, int l) {
+  // QUOTE multi_term QUOTE ":" (obj | state_ref)
+  public static boolean term_kv(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "term_kv")) return false;
     if (!nextTokenIs(b, QUOTE)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_);
+    Marker m = enter_section_(b, l, _NONE_, TERM_KV, null);
     r = consumeToken(b, QUOTE);
     r = r && multi_term(b, l + 1);
     p = r; // pin = 2
@@ -525,26 +508,24 @@ public class NatexParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // obj | QUOTE state_name QUOTE
+  // obj | state_ref
   private static boolean term_kv_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "term_kv_4")) return false;
     boolean r;
-    Marker m = enter_section_(b);
     r = obj(b, l + 1);
-    if (!r) r = term_kv_4_1(b, l + 1);
-    exit_section_(b, m, null, r);
+    if (!r) r = state_ref(b, l + 1);
     return r;
   }
 
-  // QUOTE state_name QUOTE
-  private static boolean term_kv_4_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "term_kv_4_1")) return false;
+  /* ********************************************************** */
+  // "$" SYMBOL
+  public static boolean var_reference(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "var_reference")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, QUOTE);
-    r = r && state_name(b, l + 1);
-    r = r && consumeToken(b, QUOTE);
-    exit_section_(b, m, null, r);
+    Marker m = enter_section_(b, l, _NONE_, VAR_REFERENCE, "<var reference>");
+    r = consumeToken(b, "$");
+    r = r && consumeToken(b, SYMBOL);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

@@ -29,20 +29,26 @@ public class NatexKvImpl extends ASTWrapperPsiElement implements NatexKv {
 
   @Override
   @Nullable
-  public NatexMultiTerm getMultiTerm() {
-    return findChildByClass(NatexMultiTerm.class);
+  public NatexScore getScore() {
+    return findChildByClass(NatexScore.class);
   }
 
   @Override
   @Nullable
-  public NatexObj getObj() {
-    return findChildByClass(NatexObj.class);
+  public NatexSpeaker getSpeaker() {
+    return findChildByClass(NatexSpeaker.class);
   }
 
   @Override
   @Nullable
-  public NatexStateName getStateName() {
-    return findChildByClass(NatexStateName.class);
+  public NatexStateDeclaration getStateDeclaration() {
+    return findChildByClass(NatexStateDeclaration.class);
+  }
+
+  @Override
+  @Nullable
+  public NatexTermKv getTermKv() {
+    return findChildByClass(NatexTermKv.class);
   }
 
 }

@@ -25,4 +25,7 @@ public interface NatexKleeneStar extends PsiElement {
   @Nullable
   NatexSequence getSequence();
 
+  @Nullable
+  NatexVarReference getVarReference();
+
 }

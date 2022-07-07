@@ -8,12 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface NatexKv extends PsiElement {
 
   @Nullable
-  NatexMultiTerm getMultiTerm();
+  NatexScore getScore();
 
   @Nullable
-  NatexObj getObj();
+  NatexSpeaker getSpeaker();
 
   @Nullable
-  NatexStateName getStateName();
+  NatexStateDeclaration getStateDeclaration();
+
+  @Nullable
+  NatexTermKv getTermKv();
 
 }

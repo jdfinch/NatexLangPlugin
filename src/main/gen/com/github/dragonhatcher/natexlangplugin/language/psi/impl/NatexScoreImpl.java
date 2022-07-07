@@ -11,25 +11,20 @@ import static com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes.*
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
 
-public class NatexStateNameImpl extends ASTWrapperPsiElement implements NatexStateName {
+public class NatexScoreImpl extends ASTWrapperPsiElement implements NatexScore {
 
-  public NatexStateNameImpl(@NotNull ASTNode node) {
+  public NatexScoreImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull NatexVisitor visitor) {
-    visitor.visitStateName(this);
+    visitor.visitScore(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof NatexVisitor) accept((NatexVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  public String getName() {
-    return NatexPsiImplUtil.getName(this);
   }
 
 }

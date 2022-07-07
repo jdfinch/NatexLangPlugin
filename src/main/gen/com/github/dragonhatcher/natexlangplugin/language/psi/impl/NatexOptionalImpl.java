@@ -63,4 +63,10 @@ public class NatexOptionalImpl extends ASTWrapperPsiElement implements NatexOpti
     return findChildByClass(NatexSequence.class);
   }
 
+  @Override
+  @Nullable
+  public NatexVarReference getVarReference() {
+    return findChildByClass(NatexVarReference.class);
+  }
+
 }

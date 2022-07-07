@@ -81,4 +81,10 @@ public class NatexTermImpl extends ASTWrapperPsiElement implements NatexTerm {
     return findChildByClass(NatexSequence.class);
   }
 
+  @Override
+  @Nullable
+  public NatexVarReference getVarReference() {
+    return findChildByClass(NatexVarReference.class);
+  }
+
 }
