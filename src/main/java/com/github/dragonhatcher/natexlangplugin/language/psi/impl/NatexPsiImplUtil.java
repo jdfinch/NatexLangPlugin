@@ -38,8 +38,10 @@ public class NatexPsiImplUtil {
             ASTNode symbol = stateNode.findChildByType(NatexTypes.SYMBOL);
             if (symbol != null) {
                 NatexStateName stateName = NatexElementFactory.createStateName(element.getProject(), newName);
-                ASTNode newSymbolNode = stateName.getFirstChild().getNode();
-                element.getNode().replaceChild(symbol, newSymbolNode);
+                ASTNode newSymbolNode = stateName.getNode().findChildByType(NatexTypes.SYMBOL);
+                if (newSymbolNode != null) {
+                    stateNode.replaceChild(symbol, newSymbolNode);
+                }
             }
         }
         return element;
@@ -49,8 +51,10 @@ public class NatexPsiImplUtil {
         ASTNode symbol = element.getNode().findChildByType(NatexTypes.SYMBOL);
         if (symbol != null) {
             NatexStateName stateName = NatexElementFactory.createStateName(element.getProject(), newName);
-            ASTNode newSymbolNode = stateName.getFirstChild().getNode();
-            element.getNode().replaceChild(symbol, newSymbolNode);
+            ASTNode newSymbolNode = stateName.getNode().findChildByType(NatexTypes.SYMBOL);
+            if (newSymbolNode != null) {
+                element.getNode().replaceChild(symbol, newSymbolNode);
+            }
         }
 
         return element;
