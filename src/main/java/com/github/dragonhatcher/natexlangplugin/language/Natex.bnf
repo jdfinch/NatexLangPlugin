@@ -25,7 +25,7 @@ state_declaration ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE {
     pin=2
     mixin="com.github.dragonhatcher.natexlangplugin.language.psi.impl.NatexNamedElementImpl"
     implements="com.github.dragonhatcher.natexlangplugin.language.psi.NatexNamedElement"
-    methods=[getName setName getNameIdentifier]
+    methods=[getName setName getNameIdentifier getTextOffset]
 }
 score ::= QUOTE "score" QUOTE ":" {pin=2}
 speaker ::= QUOTE "speaker" QUOTE ":" QUOTE ("system" | "user") QUOTE {pin=2}

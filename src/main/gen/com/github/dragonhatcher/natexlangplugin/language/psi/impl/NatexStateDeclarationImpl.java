@@ -47,4 +47,9 @@ public class NatexStateDeclarationImpl extends NatexNamedElementImpl implements 
     return NatexPsiImplUtil.getNameIdentifier(this);
   }
 
+  @Override
+  public int getTextOffset() {
+    return NatexPsiImplUtil.getTextOffset(this);
+  }
+
 }

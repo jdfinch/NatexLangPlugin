@@ -16,4 +16,6 @@ public interface NatexStateDeclaration extends NatexNamedElement {
 
   PsiElement getNameIdentifier();
 
+  int getTextOffset();
+
 }

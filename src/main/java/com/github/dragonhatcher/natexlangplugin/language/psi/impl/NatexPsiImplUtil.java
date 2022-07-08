@@ -6,6 +6,7 @@ import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
+import com.intellij.psi.impl.source.tree.LeafPsiElement;
 
 public class NatexPsiImplUtil {
     private static String findStateName(PsiElement element) {
@@ -45,6 +46,17 @@ public class NatexPsiImplUtil {
             }
         }
         return element;
+    }
+
+    public static int getTextOffset(NatexStateDeclaration element) {
+        ASTNode stateNode = element.getNode().findChildByType(NatexTypes.STATE_NAME);
+        if (stateNode != null) {
+            ASTNode symbol = stateNode.findChildByType(NatexTypes.SYMBOL);
+            if (symbol != null) {
+                return ((LeafPsiElement) symbol).getTextOffset();
+            }
+        }
+        return 0;
     }
 
     public static PsiElement setName(NatexStateName element, String newName) {
