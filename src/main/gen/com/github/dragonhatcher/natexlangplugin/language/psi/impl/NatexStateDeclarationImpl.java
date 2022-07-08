@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
 
-public class NatexStateDeclarationImpl extends ASTWrapperPsiElement implements NatexStateDeclaration {
+public class NatexStateDeclarationImpl extends NatexNamedElementImpl implements NatexStateDeclaration {
 
   public NatexStateDeclarationImpl(@NotNull ASTNode node) {
     super(node);
@@ -34,8 +33,18 @@ public class NatexStateDeclarationImpl extends ASTWrapperPsiElement implements N
   }
 
   @Override
-  public String getDeclaredStateName() {
-    return NatexPsiImplUtil.getDeclaredStateName(this);
+  public String getName() {
+    return NatexPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return NatexPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return NatexPsiImplUtil.getNameIdentifier(this);
   }
 
 }

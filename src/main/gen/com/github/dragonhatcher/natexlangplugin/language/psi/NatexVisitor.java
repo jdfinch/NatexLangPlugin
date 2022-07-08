@@ -68,7 +68,7 @@ public class NatexVisitor extends PsiElementVisitor {
   }
 
   public void visitStateDeclaration(@NotNull NatexStateDeclaration o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitStateName(@NotNull NatexStateName o) {
@@ -92,6 +92,10 @@ public class NatexVisitor extends PsiElementVisitor {
   }
 
   public void visitX(@NotNull NatexX o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedElement(@NotNull NatexNamedElement o) {
     visitPsiElement(o);
   }
 

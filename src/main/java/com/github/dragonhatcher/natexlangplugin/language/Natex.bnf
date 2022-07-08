@@ -21,12 +21,19 @@ obj ::= L_CURLY kv ("," kv)* ","? R_CURLY
 
 kv ::=  state_declaration | score | speaker | term_kv
 
-state_declaration ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE {pin=2 methods=[getDeclaredStateName]}
+state_declaration ::= QUOTE "state" QUOTE ":" QUOTE state_name QUOTE {
+    pin=2
+    mixin="com.github.dragonhatcher.natexlangplugin.language.psi.impl.NatexNamedElementImpl"
+    implements="com.github.dragonhatcher.natexlangplugin.language.psi.NatexNamedElement"
+    methods=[getName setName getNameIdentifier]
+}
 score ::= QUOTE "score" QUOTE ":" {pin=2}
 speaker ::= QUOTE "speaker" QUOTE ":" QUOTE ("system" | "user") QUOTE {pin=2}
 term_kv ::= QUOTE multi_term QUOTE ":" (obj | state_ref) {pin=2}
 
-state_name ::= SYMBOL {methods=[getName]}
+state_name ::= SYMBOL {
+    methods=[getName getReference setName]
+}
 state_ref ::= QUOTE state_name QUOTE {pin=1 methods=[getReferencedStateName]}
 
 multi_term ::= term (","? (QUOTE QUOTE)? term)*

@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.dragonhatcher.natexlangplugin.language.psi.NatexTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
+import com.intellij.psi.PsiReference;
 
 public class NatexStateNameImpl extends ASTWrapperPsiElement implements NatexStateName {
 
@@ -30,6 +31,16 @@ public class NatexStateNameImpl extends ASTWrapperPsiElement implements NatexSta
   @Override
   public String getName() {
     return NatexPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiReference getReference() {
+    return NatexPsiImplUtil.getReference(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return NatexPsiImplUtil.setName(this, newName);
   }
 
 }

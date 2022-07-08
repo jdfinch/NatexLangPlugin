@@ -79,7 +79,7 @@ public class NatexUtil {
 
         return findAllStateDeclarations(element)
                 .stream()
-                .filter(sn -> searchStateName.equals(sn.getDeclaredStateName()))
+                .filter(sn -> searchStateName.equals(sn.getName()))
                 .collect(Collectors.toList());
 
 //        System.out.println("Found " + declarations.size());

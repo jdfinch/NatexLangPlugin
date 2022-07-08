@@ -1,7 +1,6 @@
 package com.github.dragonhatcher.natexlangplugin.language;
 
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
-import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;

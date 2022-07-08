@@ -42,6 +42,18 @@
                 language="Natex"
                 implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexAnnotator"/>
 
+        <completion.contributor
+            language="Natex"
+            implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexCompletionContributor"/>
+
+        <lang.refactoringSupport
+            language="Natex"
+            implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexRefactoringSupportProvider"/>
+
+        <lang.findUsagesProvider
+            language="Natex"
+            implementationClass="com.github.dragonhatcher.natexlangplugin.language.NatexFindUsagesProvider"/>
+
         <multiHostInjector implementation="com.github.dragonhatcher.natexlangplugin.language.PythonInjector"/>
     </extensions>
 
