@@ -2,8 +2,6 @@ package com.github.dragonhatcher.natexlangplugin.language;
 
 import com.github.dragonhatcher.natexlangplugin.language.psi.NatexStateDeclaration;
 import com.github.dragonhatcher.natexlangplugin.language.psi.NatexStateName;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
@@ -43,18 +41,15 @@ public class NatexReference extends PsiReferenceBase<PsiElement> implements PsiP
     @Override
     public Object @NotNull [] getVariants() {
         List<NatexStateName> stateNames = NatexUtil.findAllStateNames(myElement);
-        List<LookupElement> variants = new ArrayList<>();
         Set<String> added = new HashSet<>();
         for (final NatexStateName stateName : stateNames) {
             if (stateName.getName() != null
                     && stateName.getName().length() > 0
-                    && !added.contains(stateName.getName())
             ) {
-                variants.add(LookupElementBuilder.create(stateName));
                 added.add(stateName.getName());
             }
         }
-        return variants.toArray();
+        return added.toArray();
     }
 
     @Override
