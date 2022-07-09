@@ -1,6 +1,8 @@
 package com.github.dragonhatcher.natexlangplugin.language;
 
 import com.github.dragonhatcher.natexlangplugin.language.psi.*;
+import com.intellij.codeInsight.daemon.impl.quickfix.RenameElementFix;
+import com.intellij.codeInspection.ProblemHighlightType;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
@@ -19,22 +21,21 @@ public class NatexAnnotator implements Annotator {
                     .create();
         }
 
-//        if (element instanceof NatexStateRef) {
-//            if (NatexUtil.findStateNameDeclarations(
-//                    element,
-//                    ((NatexStateRef) element).getReferencedStateName()
-//            ).isEmpty()) {
-//                var symbol = element.getNode().findChildByType(NatexTypes.SYMBOL);
-//
-//                holder
-//                        .newAnnotation(HighlightSeverity.WARNING, "Unknown state.")
-//                        .range(symbol == null ? element.getNode() : symbol)
-//                        .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
-//                        .create();
-//            }
-//        } else if (element instanceof NatexStateDeclaration) {
-//
-//        }
+        if (element instanceof NatexStateRef) {
+            String name = ((NatexStateRef) element).getReferencedStateName();
+            if (NatexUtil.findStateNameDeclarations(element, name).isEmpty() && !name.contains(":")) {
+                var stateName = element.getNode().findChildByType(NatexTypes.STATE_NAME);
+                if (stateName != null) {
+                    var symbol = stateName.findChildByType(NatexTypes.SYMBOL);
+
+                    holder
+                            .newAnnotation(HighlightSeverity.ERROR, "Unknown state")
+                            .range(symbol == null ? element.getNode() : symbol)
+                            .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
+                            .create();
+                }
+            }
+        }
 
         if (element instanceof NatexMacro) {
             holder
