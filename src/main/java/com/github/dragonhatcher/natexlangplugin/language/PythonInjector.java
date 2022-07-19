@@ -95,7 +95,7 @@ public class PythonInjector implements MultiHostInjector {
                 if (key instanceof PyStringLiteralExpression) {
                     write("\"", key, "\":");
                     recurseOnChildren(value);
-                } else if (value instanceof PyDictLiteralExpression) {
+                } else if (value instanceof PyDictLiteralExpression || value instanceof PyStringLiteralExpression) {
                     write("'expr':");
                     recurseOnChildren(value);
                 }
