@@ -33,4 +33,10 @@ public class NatexMacroArgImpl extends ASTWrapperPsiElement implements NatexMacr
     return findChildByClass(NatexMacro.class);
   }
 
+  @Override
+  @NotNull
+  public List<NatexTerm> getTermList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, NatexTerm.class);
+  }
+
 }

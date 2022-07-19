@@ -50,5 +50,5 @@ negation ::= "-" term
 var_reference ::= "$" SYMBOL
 assignment ::= "$" SYMBOL "=" term {pin=3}
 macro ::= MACRO_NAME ( L_PAREN macro_arg? (","? " "? macro_arg)* R_PAREN )? {pin=1}
-macro_arg ::= (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION)+ | macro
+macro_arg ::= (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term)+ | macro
 x ::= PUNCUATION

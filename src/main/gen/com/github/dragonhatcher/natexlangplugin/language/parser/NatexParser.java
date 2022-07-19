@@ -198,7 +198,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION)+ | macro
+  // (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term)+ | macro
   public static boolean macro_arg(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro_arg")) return false;
     boolean r;
@@ -209,7 +209,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION)+
+  // (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term)+
   private static boolean macro_arg_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro_arg_0")) return false;
     boolean r;
@@ -224,7 +224,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION
+  // MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term
   private static boolean macro_arg_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro_arg_0_0")) return false;
     boolean r;
@@ -232,6 +232,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, MACRO_LITERAL);
     if (!r) r = consumeToken(b, SYMBOL);
     if (!r) r = consumeToken(b, PUNCUATION);
+    if (!r) r = term(b, l + 1);
     return r;
   }
 
