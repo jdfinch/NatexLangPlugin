@@ -198,35 +198,24 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term)+ | macro
+  // (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term)+
   public static boolean macro_arg(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro_arg")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MACRO_ARG, "<macro arg>");
     r = macro_arg_0(b, l + 1);
-    if (!r) r = macro(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!macro_arg_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "macro_arg", c)) break;
+    }
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // (MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term)+
+  // MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term
   private static boolean macro_arg_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "macro_arg_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = macro_arg_0_0(b, l + 1);
-    while (r) {
-      int c = current_position_(b);
-      if (!macro_arg_0_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "macro_arg_0", c)) break;
-    }
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // MACRO_ARG_STRING | MACRO_LITERAL | SYMBOL | PUNCUATION | term
-  private static boolean macro_arg_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "macro_arg_0_0")) return false;
     boolean r;
     r = consumeToken(b, MACRO_ARG_STRING);
     if (!r) r = consumeToken(b, MACRO_LITERAL);
@@ -314,7 +303,7 @@ public class NatexParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // sequence | conjunction | disjunction | negation | REGEX | var_reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
+  // sequence | conjunction | disjunction | negation | REGEX | assignment | var_reference  | macro | LITERAL | SYMBOL | STATE | KEYWORD
   static boolean non_kleene_term(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "non_kleene_term")) return false;
     boolean r;
@@ -323,8 +312,8 @@ public class NatexParser implements PsiParser, LightPsiParser {
     if (!r) r = disjunction(b, l + 1);
     if (!r) r = negation(b, l + 1);
     if (!r) r = consumeToken(b, REGEX);
-    if (!r) r = var_reference(b, l + 1);
     if (!r) r = assignment(b, l + 1);
+    if (!r) r = var_reference(b, l + 1);
     if (!r) r = macro(b, l + 1);
     if (!r) r = consumeToken(b, LITERAL);
     if (!r) r = consumeToken(b, SYMBOL);

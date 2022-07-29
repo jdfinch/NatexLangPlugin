@@ -7,9 +7,6 @@ import com.intellij.psi.PsiElement;
 
 public interface NatexMacroArg extends PsiElement {
 
-  @Nullable
-  NatexMacro getMacro();
-
   @NotNull
   List<NatexTerm> getTermList();
 

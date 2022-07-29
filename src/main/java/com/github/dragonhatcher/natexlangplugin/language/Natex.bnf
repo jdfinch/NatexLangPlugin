@@ -38,7 +38,7 @@ state_ref ::= QUOTE state_name QUOTE {pin=1 methods=[getReferencedStateName]}
 
 multi_term ::= term (","? (QUOTE QUOTE)? term)*
 term ::= optional | kleene_star | kleene_plus | non_kleene_term
-private non_kleene_term ::= sequence | conjunction | disjunction | negation | REGEX | var_reference | assignment | macro | LITERAL | SYMBOL | STATE | KEYWORD
+private non_kleene_term ::= sequence | conjunction | disjunction | negation | REGEX | assignment | var_reference  | macro | LITERAL | SYMBOL | STATE | KEYWORD
 
 sequence ::= L_BRACKET "!"? multi_term R_BRACKET {pin=1}
 conjunction ::= L_ARROW multi_term R_ARROW {pin=1}
